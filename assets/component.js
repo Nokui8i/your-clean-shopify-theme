@@ -1,5 +1,5 @@
-import { DeclarativeShadowElement } from '@theme/critical';
-import { requestIdleCallback } from '@theme/utilities';
+import { DeclarativeShadowElement } from './critical.js';
+import { requestIdleCallback } from './utilities.js';
 
 /**
  * @typedef {Record<string, Element | Element[] | undefined>} Refs
