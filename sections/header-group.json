@@ -19,8 +19,8 @@
           "static": true,
           "settings": {
             "hide_logo_on_home_page": false,
-            "custom_height": 36,
-            "custom_height_mobile": 28,
+            "custom_height": 40,
+            "custom_height_mobile": 32,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -42,7 +42,7 @@
             "color_scheme": "",
             "menu_font_style": "inverse_large",
             "type_font_primary_link": "subheading",
-            "type_font_primary_size": "1.25rem",
+            "type_font_primary_size": "1.125rem",
             "type_case_primary_link": "uppercase",
             "type_font_secondary_link": "subheading",
             "type_case_secondary_link": "uppercase",
@@ -58,7 +58,7 @@
         }
       },
       "settings": {
-        "logo_position": "left",
+        "logo_position": "center",
         "menu_position": "left",
         "menu_row": "top",
         "show_search": true,
@@ -73,7 +73,7 @@
         "localization_row": "top",
         "section_width": "full-width",
         "section_height": "standard",
-        "enable_sticky_header": "never",
+        "enable_sticky_header": "always",
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
