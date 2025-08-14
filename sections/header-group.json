@@ -15,7 +15,7 @@
       "type": "section",
       "blocks": {
         "logo": {
-          "type": "_header-logo",
+          "type": "header-logo",
           "static": true,
           "settings": {
             "hide_logo_on_home_page": false,
@@ -40,7 +40,7 @@
       }
     },
     "header_menu": {
-      "type": "_header-menu",
+      "type": "header-menu",
       "static": true,
       "settings": {
         "menu": "main-menu",
@@ -68,7 +68,7 @@
       "blocks": {}
     },
     "header_actions": {
-      "type": "_header-actions",
+      "type": "header-actions",
       "static": true,
       "settings": {
         "show_search": true,

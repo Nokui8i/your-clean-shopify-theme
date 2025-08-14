@@ -156,12 +156,23 @@
       }
     },
     "newsletter_signup": {
-      "type": "email-signup",
+      "type": "section",
+      "blocks": {
+        "newsletter_header": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>JOIN OUR FAMILY!</h2><p>Sign up to our newsletter and receive special discount on your first order.</p>",
+            "alignment": "center",
+            "type_preset": "h2",
+            "case": "uppercase"
+          }
+        }
+      },
+      "block_order": ["newsletter_header"],
       "settings": {
-        "heading": "JOIN OUR FAMILY!",
-        "subtext": "Sign up to our newsletter and receive special discount on your first order.",
-        "width": "custom",
-        "custom_width": 50,
+        "content_direction": "column",
+        "horizontal_alignment": "center",
+        "gap": 20,
         "color_scheme": "scheme-3",
         "padding-block-start": 80,
         "padding-block-end": 80

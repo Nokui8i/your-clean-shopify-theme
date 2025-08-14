@@ -1,56 +1,15 @@
 {
   "sections": {
     "collection_header": {
-      "type": "collection-banner",
+      "type": "main-collection",
       "settings": {
-        "show_collection_description": true,
-        "show_collection_image": true,
         "color_scheme": "scheme-1",
         "padding-block-start": 60,
         "padding-block-end": 40
       }
-    },
-    "collection_toolbar": {
-      "type": "collection-toolbar",
-      "settings": {
-        "show_collection_count": true,
-        "show_sorting": true,
-        "show_view_switcher": true,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 20,
-        "padding-block-end": 20
-      }
-    },
-    "product_grid": {
-      "type": "product-grid",
-      "settings": {
-        "products_per_page": 24,
-        "columns_desktop": 4,
-        "columns_mobile": "2",
-        "image_ratio": "square",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "enable_quick_add": true,
-        "enable_quick_view": false,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
-    },
-    "pagination": {
-      "type": "pagination",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "padding-block-start": 40,
-        "padding-block-end": 80
-      }
     }
   },
   "order": [
-    "collection_header",
-    "collection_toolbar",
-    "product_grid",
-    "pagination"
+    "collection_header"
   ]
 }
