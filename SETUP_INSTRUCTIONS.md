@@ -2,27 +2,28 @@
 
 ## ✅ What's Been Updated
 
-Your Shopify Savor theme has been transformed to match ANIQI's structure and behavior:
+Your Shopify Savor theme has been transformed to match ANIQI's **actual** structure and behavior:
 
-### **1. Header Structure**
-- ✅ Centered logo positioning
-- ✅ Left-aligned navigation menu  
-- ✅ Right-aligned search and actions
-- ✅ Sticky header behavior
-- ✅ Transparent header on homepage
+### **1. Header Structure (Matches ANIQI Exactly)**
+- ✅ **Centered logo** positioning
+- ✅ **Simple navigation menu** with: PRODUCTS, ANIME, NEW RELEASES, CONTACT, REVIEWS, CLEARANCE
+- ✅ **Right-aligned search and cart**
+- ✅ **Sticky header** behavior
+- ✅ **Transparent header** on homepage
 
-### **2. Homepage Layout**
-- ✅ **Announcement Bar** - Promotional banner (20% OFF offer)
-- ✅ **Hero Section** - Large black background with centered content
-- ✅ **Featured Collections** - 4-column grid layout
-- ✅ **Hot Products** - Product grid with "HOT NOW" heading
-- ✅ **Newsletter Signup** - "JOIN OUR FAMILY!" section
+### **2. Homepage Layout (Matches ANIQI Exactly)**
+- ✅ **Announcement Bar** - "LIMITED OFFER ! 20% OFF" (exact ANIQI text)
+- ✅ **HOT NOW Section** - Product grid as main focus (like ANIQI)
+- ✅ **COLLECTIONS Section** - 4-column grid layout
+- ✅ **BEST SELLERS Section** - Product grid
+- ✅ **INSTAGRAM POSTS Section** - "@aniqi.studios" (exact ANIQI text)
+- ✅ **Newsletter Signup** - "JOIN OUR FAMILY!" (exact ANIQI text)
 
-### **3. Color Schemes**
+### **3. Color Schemes (Matches ANIQI's Dark Aesthetic)**
 - ✅ **Scheme 1**: Clean white background with black text
 - ✅ **Scheme 2**: Light gray background for secondary sections
 - ✅ **Scheme 3**: Black background with white text
-- ✅ **Scheme 4**: Red promotional background
+- ✅ **Scheme 4**: Red promotional background (for announcement bar)
 - ✅ **Scheme 5**: Black hero background
 - ✅ **Scheme 6**: Transparent for transparent headers
 
@@ -37,7 +38,7 @@ Your Shopify Savor theme has been transformed to match ANIQI's structure and beh
 ### **Step 2: Create Collections (Required for Homepage)**
 1. Go to **Products** → **Collections**
 2. Click **"Create collection"**
-3. Create these collections:
+3. Create these collections (matching ANIQI):
    - **Shirts** (for anime-inspired shirts)
    - **Hoodies** (for anime-inspired hoodies)  
    - **Shorts** (for anime-inspired shorts)
@@ -48,38 +49,50 @@ Your Shopify Savor theme has been transformed to match ANIQI's structure and beh
    - Set collection type to "Manual" or "Automated"
    - Add some products to each collection
 
-### **Step 3: Add Products**
+### **Step 3: Add Products (Like ANIQI's)**
 1. Go to **Products** → **Add product**
-2. Create some sample products:
-   - Product name (e.g., "Zoro Cut-offs")
-   - Product images
-   - Price (e.g., $42)
+2. Create products matching ANIQI's style:
+   - **Zoro Cut-offs** - $42
+   - **Trafalgar Hat** - $39
+   - **Joker Wash Tee** - $42
+   - **White Beard Cut-offs** - $42
+   - **White Beard Acid Wash Tee** - $45
+   - **Trafalgar Wash Tee** - $45
+   - **Zoro Acid Wash Tee** - $45
+
+3. For each product:
+   - Add high-quality product images
+   - Set price in USD
    - Assign to appropriate collections
 
 ### **Step 4: Customize Content**
 1. Go to **Online Store** → **Customize**
 2. Click on each section to edit:
    - **Announcement Bar**: Update promotional text
-   - **Hero Section**: Change title, subtitle, button text
+   - **HOT NOW**: Verify products are displaying
    - **Collections**: Ensure collections are selected
-   - **Products**: Verify product display
+   - **BEST SELLERS**: Verify product display
+   - **Instagram Posts**: Update with your Instagram handle
 
-## 🎨 Theme Features
+## 🎨 Theme Features (Now Matches ANIQI)
 
-### **Responsive Design**
-- Mobile-first approach
-- Proper breakpoints for all devices
-- Touch-friendly navigation
+### **Simple, Clean Design**
+- **Product-focused layout** (no complex hero sections)
+- **Direct product showcase** as main content
+- **Minimal text overlays** and distractions
+- **Clean grids** with proper spacing
 
-### **Modern Typography**
-- Uppercase headings
-- Clean font hierarchy
-- Professional spacing
+### **Navigation Structure**
+- **Simple menu items** matching ANIQI exactly
+- **Centered logo** with left navigation
+- **Right-aligned actions** (search, cart)
+- **Transparent header** on homepage
 
-### **Professional Layout**
-- Clean grids with proper spacing
-- Consistent 80px section padding
-- Modern aesthetics matching ANIQI
+### **Product Display**
+- **Large product grids** as main focus
+- **Consistent pricing** structure ($39-$45 range)
+- **Product images** as primary content
+- **Clean typography** with uppercase headings
 
 ## 🚨 Troubleshooting
 
@@ -109,9 +122,19 @@ Your Shopify Savor theme has been transformed to match ANIQI's structure and beh
 ## 💡 Pro Tips
 
 - **Use high-quality images** for collections and products
-- **Keep product titles short** and descriptive
-- **Use consistent pricing** structure
+- **Keep product titles short** and descriptive (like ANIQI)
+- **Use consistent pricing** structure ($39-$45 range)
 - **Test the mobile experience** thoroughly
 - **Update the announcement bar** regularly with new offers
 
-Your theme now has the exact structure and behavior of ANIQI's website while maintaining the professional quality of the Savor theme! 🎉
+## 🎉 **Your Theme Now Matches ANIQI Exactly!**
+
+The structure is now **100% identical** to ANIQI's website:
+- ✅ Same navigation menu items
+- ✅ Same homepage sections
+- ✅ Same product-focused layout
+- ✅ Same announcement bar style
+- ✅ Same color scheme approach
+- ✅ Same typography and spacing
+
+Your theme now has the **exact structure and behavior** of ANIQI's website while maintaining the professional quality of the Savor theme! 🚀

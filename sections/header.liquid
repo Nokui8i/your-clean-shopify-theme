@@ -1,677 +1,346 @@
+{%- comment -%}
+  Header section
+{%- endcomment -%}
 
-
-{% liquid
-  assign order = 'logo,menu,localization,search,mobile_search,actions'
-
-  if shop.customer_accounts_enabled
-    assign order = 'mobile_search,logo,menu,localization,search,actions'
-  endif
-
-  assign rows = 'top,bottom' | split: ','
-  assign search_style = 'none'
-
-  if section.settings.show_search
-    assign search_style = 'modal'
-  endif
-
-  if section.settings.enable_transparent_header_home and template.name == 'index'
-    assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.home_color_scheme
-  elsif section.settings.enable_transparent_header_product and template.name == 'product'
-    assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.product_color_scheme
-  elsif section.settings.enable_transparent_header_collection and template.name == 'collection'
-    assign transparent = 'always'
-    assign transparent_color_scheme = section.settings.collection_color_scheme
-  endif
-
-  if section.settings.enable_sticky_header == 'always'
-    assign sticky = 'always'
-  elsif section.settings.enable_sticky_header == 'scroll-up'
-    assign sticky = 'scroll-up'
-  endif
-
-  if transparent and sticky
-    assign transparent = 'not-sticky'
-  endif
-
-  if transparent
-    if transparent_color_scheme == 'inverse'
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_transparent
-    else
-      assign transparent_color_scheme = 'color-' | append: section.settings.color_scheme_top
-    endif
-  endif
-
-  capture logo
-    content_for 'block', type: '_header-logo', id: 'header-logo'
-  endcapture
-
-  capture menu
-    content_for 'block', type: '_header-menu', id: 'header-menu'
-  endcapture
-
-  capture mobile_menu
-    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
-  endcapture
-
-  capture navigation_bar
-    content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'navigation_bar', transparent: transparent
-  endcapture
-
-  capture actions
-    render 'header-actions'
-  endcapture
-
-  if shop.customer_accounts_enabled
-    assign search_class = 'mobile:hidden'
-  endif
-
-  if section.settings.search_position == 'left'
-    if shop.customer_accounts_enabled
-      assign order = 'mobile_search,logo,search,menu,localization,actions'
-    else
-      assign order = 'logo,search,menu,localization,mobile_search,actions'
-    endif
-  endif
-  capture search
-    render 'search', style: search_style, class: search_class
-  endcapture
-
-  # Skip mobile search under specific conditions:
-  # Always render if search_row is bottom
-  # Don't render when shop.customer_accounts_enabled is false and search_position is left and search_style is not none
-  assign skip_mobile_search = false
-  if shop.customer_accounts_enabled == false and section.settings.search_position == 'left' and search_style != 'none'
-    assign skip_mobile_search = true
-  endif
-
-  if section.settings.search_row == 'bottom' or search_style != 'none' and skip_mobile_search == false
-    # Mobile search duplicate for when search is not in the right order for mobile layout
-    capture mobile_search
-      render 'search', class: 'desktop:hidden', style: search_style
-    endcapture
-  endif
-
-  assign show_language = section.settings.show_language
-  if localization.available_languages.size <= 1
-    assign show_language = false
-  endif
-
+{%- liquid
+  assign header_color_scheme = section.settings.color_scheme
+  assign header_color_scheme_transparent = section.settings.color_scheme_transparent
+  assign enable_transparent_header_home = section.settings.enable_transparent_header_home
+  assign enable_transparent_header_product = section.settings.enable_transparent_header_product
+  assign enable_transparent_header_collection = section.settings.enable_transparent_header_collection
+  assign home_color_scheme = section.settings.home_color_scheme
+  assign product_color_scheme = section.settings.product_color_scheme
+  assign collection_color_scheme = section.settings.collection_color_scheme
+  assign enable_sticky_header = section.settings.enable_sticky_header
+  assign divider_width = section.settings.divider_width
+  assign divider_size = section.settings.divider_size
+  assign logo_position = section.settings.logo_position
+  assign menu_position = section.settings.menu_position
+  assign menu_row = section.settings.menu_row
+  assign show_search = section.settings.show_search
+  assign search_position = section.settings.search_position
+  assign search_row = section.settings.search_row
   assign show_country = section.settings.show_country
-  if localization.available_countries.size <= 1
-    assign show_country = false
+  assign country_selector_style = section.settings.country_selector_style
+  assign show_language = section.settings.show_language
+  assign localization_font = section.settings.localization_font
+  assign localization_font_size = section.settings.localization_font_size
+  assign localization_position = section.settings.localization_position
+  assign localization_row = section.settings.localization_row
+  assign section_width = section.settings.section_width
+  assign section_height = section.settings.section_height
+
+  # Determine if header should be transparent
+  assign is_transparent = false
+  if enable_transparent_header_home and template == 'index'
+    assign is_transparent = true
+    assign header_color_scheme = header_color_scheme_transparent
+  elsif enable_transparent_header_product and template contains 'product'
+    assign is_transparent = true
+    assign header_color_scheme = header_color_scheme_transparent
+  elsif enable_transparent_header_collection and template contains 'collection'
+    assign is_transparent = true
+    assign header_color_scheme = header_color_scheme_transparent
   endif
 
-  if show_country or show_language
-    capture localization_markup
-      render 'dropdown-localization', show_country: show_country, show_language: show_language, country_style: section.settings.country_selector_style, localization_position: section.settings.localization_position
-    endcapture
+  # Determine color scheme for homepage
+  if template == 'index' and home_color_scheme == 'inverse'
+    assign header_color_scheme = header_color_scheme_transparent
   endif
 
-  assign bottom_row_blocks = ''
-
-  if section.settings.menu_row == 'bottom'
-    assign bottom_row_blocks = bottom_row_blocks | append: 'menu,'
+  # Determine color scheme for product pages
+  if template contains 'product' and product_color_scheme == 'inverse'
+    assign header_color_scheme = header_color_scheme_transparent
   endif
 
-  if section.settings.search_style != 'none'
-    if section.settings.search_row == 'bottom'
-      assign bottom_row_blocks = bottom_row_blocks | append: 'search,'
-    endif
+  # Determine color scheme for collection pages
+  if template contains 'collection' and collection_color_scheme == 'inverse'
+    assign header_color_scheme = header_color_scheme_transparent
   endif
 
-  if section.settings.show_country or section.settings.show_language
-    if section.settings.localization_row == 'bottom'
-      assign bottom_row_blocks = bottom_row_blocks | append: 'localization,'
-    endif
+  # Set sticky header class
+  assign sticky_class = ''
+  if enable_sticky_header == 'always'
+    assign sticky_class = 'header--sticky'
+  elsif enable_sticky_header == 'on_scroll_up'
+    assign sticky_class = 'header--sticky-on-scroll-up'
   endif
+-%}
 
-  assign bottom_row_blocks = bottom_row_blocks | split: ',' | compact
-
-  if section.settings.section_height == 'compact'
-    assign header_height_class = ' header--compact'
-  endif
-
-  if bottom_row_blocks.size > 0 and section.settings.color_scheme_top.settings.background.rgb == section.settings.color_scheme_bottom.settings.background.rgb and section.settings.divider_width == 0
-    assign collapse_header_paddings_class = 'header--collapse-row-paddings'
-  endif
-
-  assign class = 'header'
-
-  if transparent_color_scheme
-    assign class = class | append: ' ' | append: transparent_color_scheme
-  endif
-
-  if section.settings.color_scheme_top.settings.background.alpha != 1
-    assign class = class | append: ' ' | append: 'header--inherit-color-scheme-on-menu-open'
-  endif
-
-  if header_height_class
-    assign class = class | append: ' ' | append: header_height_class
-  endif
-
-  if collapse_header_paddings_class
-    assign class = class | append: ' ' | append: collapse_header_paddings_class
-  endif
-%}
-
-<script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Organization",
-    "name": {{ shop.name | json }},
-    {% if settings.logo %}
-      "logo": {{ settings.logo | image_url: width: 500 | prepend: "https:" | json }},
-    {% endif %}
-    "url": {{ request.origin | append: page.url | json }}
-  }
-</script>
-
-<header-component
-  id="header-component"
-  class="{{ class }}"
-  {% if transparent %}
-    transparent="{{ transparent }}"
-  {% endif %}
-  {% if sticky %}
-    sticky="{{ sticky }}"
-  {% endif %}
-  data-skip-node-update
-  data-scroll-direction="none"
+<header
+  class="
+    header
+    header--{{ section_height }}
+    {{ sticky_class }}
+    {% if is_transparent %}header--transparent{% endif %}
+    color-{{ header_color_scheme }}
+  "
+  data-header
 >
-  {% for row in rows %}
-    {% liquid
-      assign scheme = 'color_scheme_' | append: row
-      assign class = 'header__row header__row--[row] color-[row_scheme] section section--full-width-margin section--[section-width]' | replace: '[row]', row | replace: '[row_scheme]', section.settings[scheme] | replace: '[section-width]', section.settings.section_width
-
-      case row
-        when 'top'
-          assign first = mobile_menu
-
-          if bottom_row_blocks.size > 0 and section.settings.divider_size == 'page-width'
-            assign class = class | append: ' divider--page-width'
-          endif
-
-          if bottom_row_blocks.size > 0
-            assign border_bottom_setting_id = 'divider_width'
-          else
-            assign border_bottom_setting_id = 'border_width'
-          endif
-        when 'bottom'
-          assign first = ''
-          assign class = class | append: ' mobile:hidden'
-
-          assign border_bottom_setting_id = 'border_width'
-      endcase
-
-      assign style = '--border-bottom-width: [width]px; ' | replace: '[width]', section.settings[border_bottom_setting_id]
-
-      if row == 'top'
-        assign style = style | append: '--border-bottom-width-mobile: [width]px; ' | replace: '[width]', section.settings.border_width
-      endif
-    %}
-
-    {% capture content %}
-      {% render 'header-row',
-        row: row,
-        order: order,
-        settings: section.settings,
-        first: first,
-        logo: logo,
-        menu: menu,
-        actions: actions,
-        localization: localization_markup,
-        search: search,
-        mobile_search: mobile_search
-      %}
-    {% endcapture %}
-
-    {% assign content = content | strip %}
-    {% if content != blank %}
-      <div
-        class="{{ class | strip }}"
-        ref="headerRowTop"
-        {%- if style != blank -%}
-          style="{{ style | strip }}"
+  <div class="header__content">
+    <div class="header__row header__row--{{ menu_row }}">
+      <div class="header__logo-wrapper">
+        {%- if section.blocks['logo'] -%}
+          {%- render 'header-logo', block: section.blocks['logo'] -%}
         {%- endif -%}
-      >
-        <div class="header__columns spacing-style">
-          {{ content }}
+      </div>
+
+      <nav class="header__nav" role="navigation" aria-label="{{ 'accessibility.navigation' | t }}">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a href="/collections/all" class="header__nav-link">PRODUCTS</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="/collections/all" class="header__nav-link">ANIME</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="/collections/all" class="header__nav-link">NEW RELEASES</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="/pages/contact" class="header__nav-link">CONTACT</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="/pages/reviews" class="header__nav-link">REVIEWS</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="/collections/clearance" class="header__nav-link">CLEARANCE</a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        {%- if show_search and search_position == 'right' and search_row == 'top' -%}
+          <div class="header__search">
+            <button
+              type="button"
+              class="header__search-toggle"
+              aria-label="{{ 'accessibility.search' | t }}"
+              data-search-toggle
+            >
+              {%- render 'icon-search' -%}
+            </button>
+          </div>
+        {%- endif -%}
+
+        <div class="header__cart">
+          <a href="/cart" class="header__cart-link" aria-label="{{ 'accessibility.cart' | t }}">
+            {%- render 'icon-cart' -%}
+            <span class="header__cart-count" data-cart-count>{{ cart.item_count }}</span>
+          </a>
         </div>
       </div>
-    {% endif %}
-  {% endfor %}
-
-  {% if navigation_bar != blank %}
-    <div class="header__row header__row--mobile desktop:hidden color-{{ section.settings.color_scheme_bottom }}">
-      {{ navigation_bar }}
     </div>
-  {% endif %}
-</header-component>
+  </div>
 
-<script
-  src="{{ 'header.js' | asset_url }}"
-  type="module"
-></script>
+  {%- if divider_width > 0 -%}
+    <div class="header__divider header__divider--{{ divider_size }}" style="--divider-width: {{ divider_width }}px;"></div>
+  {%- endif -%}
+</header>
+
+{%- if show_search -%}
+  {%- render 'search-modal' -%}
+{%- endif -%}
 
 {% stylesheet %}
-  body {
-    --header-height: 0px;
-    --header-group-height: var(--header-height);
-    --transparent-header-offset-boolean: 0; /* stylelint-disable-line declaration-property-value-disallowed-list */
-  }
-
-  body:has(> #header-group > header) {
-    --header-height: 60px;
-  }
-
-  body:has(> #header-group:empty) {
-    --header-group-height: 0px;
-  }
-
-  .header[transparent] {
-    --language-button-background-color: transparent;
-    --language-button-border-color: transparent;
-
-    /* used to apply transparency to .header__row, will only ever be transparent or unset */
-    --header-bg-color: transparent;
-
-    /* used to display the appropriate logo based on transparency state */
-    --header-logo-display: none;
-    --header-logo-inverse-display: block;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    /* transparent color scheme on .header should never apply its background color */
-    background-color: transparent;
-    z-index: var(--layer-overlay);
-
-    &[transparent='not-sticky'][data-sticky-state='active'],
-    /* Only show opaque background when hovering over menu items with children (mega menu)
-       Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
-    &:has(.mega-menu__list:hover),
-    &:has(.menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating])),
-    &:has(.menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])) {
-      --header-logo-display: unset;
-      --header-logo-inverse-display: unset;
-      --header-bg-color: unset;
-      --color-foreground: inherit;
-      --color-foreground-rgb: inherit;
-      --color-background: inherit;
-      --color-background-rgb: inherit;
-      --color-border: inherit;
-      --color-border-rgb: inherit;
-
-      .header__row {
-        /* Faster transition for "in" animation */
-        transition: color var(--animation-values-fast), border-color var(--animation-values-fast),
-          background-color var(--animation-values-fast);
-      }
-    }
-
-    .header__row {
-      /* Slower transition for "out" animation */
-      transition: color var(--animation-values-slow), border-color var(--animation-values-slow),
-        background-color var(--animation-values-slow);
-    }
-  }
-
-  :is(.header[transparent]:not([data-sticky-state='active']), .header[transparent='always'][data-sticky-state='active'])
-    .header__row:not(
-      :has(
-          .mega-menu__list:hover,
-          .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating]),
-          .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])
-        )
-    ) {
-    /* while transparent, header-row ignores its color-scheme settings, pull from the header-component */
-    --color-foreground: inherit;
-    --color-foreground-rgb: inherit;
-    --color-border: inherit;
-    --color-border-rgb: inherit;
-    --color-primary-button-background: inherit;
-    --color-primary-button-text: inherit;
-  }
-
-  .header--inherit-color-scheme-on-menu-open:has(.mega-menu__list:hover) .header__row,
-  .header--inherit-color-scheme-on-menu-open:has(
-      .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating])
-    )
-    .header__row,
-  .header--inherit-color-scheme-on-menu-open:has(
-      .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])
-    )
-    .header__row {
-    --color-foreground: inherit;
-    --color-foreground-rgb: inherit;
-    --color-background: inherit;
-    --color-background-rgb: inherit;
-    --color-border: inherit;
-    --color-border-rgb: inherit;
-  }
-
-  .header-section {
+  .header {
     position: relative;
+    z-index: 100;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
   }
 
-  #header-group:has(#header-component[sticky]) {
-    display: contents;
+  .header--transparent {
+    background: transparent;
+    border-bottom: none;
   }
 
-  .header-section:has(> #header-component[sticky='always']),
-  .header-section:has(> #header-component[sticky='scroll-up'][data-sticky-state='active']) {
+  .header--sticky {
     position: sticky;
-
-    /* Use -1 instead of 0 so intersection observer can track sticky state */
-    top: -1px;
-    z-index: var(--layer-sticky);
+    top: 0;
   }
 
-  .header[data-sticky-state] {
-    transition: opacity var(--animation-speed) var(--animation-easing);
-    opacity: 1;
-  }
-
-  .header[data-sticky-state='active'] {
-    view-transition-name: sticky-header;
-  }
-
-  .header[data-sticky-state='idle'],
-  .header[data-sticky-state='active'][data-animating] {
-    opacity: 0;
+  .header__content {
+    padding: 1rem 0;
   }
 
   .header__row {
-    position: relative;
-
-    /* will default to bg from its color scheme unless --header-bg-color is transparent */
-    background-color: var(--header-bg-color, var(--color-background));
-  }
-
-  .header__row--top:not(.divider--page-width),
-  .header__row--top.divider--page-width .header__columns,
-  .header__row--bottom {
-    border-bottom: var(--border-bottom-width) solid var(--color-border);
-  }
-
-  @media screen and (max-width: 749px) {
-    .header__row--top:not(.divider--page-width),
-    .header__row--top.divider--page-width .header__columns {
-      border-bottom-width: var(--border-bottom-width-mobile);
-    }
-  }
-
-  .header__row.divider--page-width:not(.section--page-width) .header__columns {
-    @media screen and (min-width: 750px) {
-      padding-inline-start: 0;
-      padding-inline-end: 0;
-      margin-inline-start: var(--page-margin);
-      margin-inline-end: var(--page-margin);
-    }
-  }
-
-  .header__column {
     display: flex;
     align-items: center;
-
-    /* on mobile, header__column nodes are ignored to create a new grid-template-area based on all visible content */
-    @media screen and (max-width: 749px) {
-      display: contents;
-    }
+    justify-content: space-between;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 
-  .header__column--left,
-  .header__column--center {
-    gap: var(--gap-xl);
-    grid-area: left;
-  }
-
-  .header__column--center {
+  .header__logo-wrapper {
+    flex: 1;
+    display: flex;
     justify-content: center;
-    grid-area: center;
-
-    header-menu:only-child .overflow-menu::part(list) {
-      justify-content: center;
-    }
   }
 
-  .header__column--right {
-    gap: var(--gap-xl);
+  .header__nav {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header__nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2rem;
+  }
+
+  .header__nav-link {
+    color: var(--color-foreground);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+  }
+
+  .header__nav-link:hover {
+    opacity: 0.7;
+  }
+
+  .header__actions {
+    flex: 1;
+    display: flex;
     justify-content: flex-end;
-    grid-area: right;
+    align-items: center;
+    gap: 1rem;
+  }
 
-    .overflow-menu::part(list) {
-      justify-content: flex-end;
+  .header__search-toggle,
+  .header__cart-link {
+    background: none;
+    border: none;
+    color: var(--color-foreground);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header__cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 749px) {
+    .header__nav {
+      display: none;
     }
-  }
-
-  .header__columns {
-    /* Three column layout */
-    --header-left: 1fr;
-    --header-center: auto;
-    --header-right: 1fr;
-    --header-template-columns: var(--header-left) var(--header-center) var(--header-right);
-
-    /* Mobile layout */
-    --header-mobile-bookend: 44px;
-
-    display: grid;
-    grid-template-areas: 'left center right';
-    grid-gap: var(--gap-xl);
-    grid-template-columns: var(--header-template-columns);
-
-    /* If menu is in center column */
-    &:has(.header__column--center header-menu) {
-      --header-center: auto;
-      --header-left: minmax(max-content, 1fr);
-      --header-right: minmax(max-content, 1fr);
-    }
-
-    /* If there is no center column, make the column the menu is in grow eagerly */
-    &:where(:not(:has(.header__column--center))) {
-      @media screen and (min-width: 750px) {
-        --header-template-columns: var(--header-left) var(--header-right);
-
-        grid-template-areas: 'left right';
-      }
-
-      /* If the header-menu is in the right column */
-      &:has(.header__column--right header-menu) {
-        --header-right: auto;
-        --header-left: minmax(max-content, 1fr);
-      }
-
-      /* If the header-menu is in the left column */
-      &:has(.header__column--left header-menu) {
-        --header-left: auto;
-        --header-right: minmax(max-content, 1fr);
-      }
-    }
-
-    @media screen and (max-width: 749px) {
-      --header-template-columns: var(--header-mobile-bookend) var(--header-mobile-bookend) 1fr
-        var(--header-mobile-bookend) var(--header-mobile-bookend);
-
-      grid-template-areas: 'leftA leftB center rightA rightB';
-      grid-column: span 3;
-      column-gap: 0;
-      align-items: center;
-      padding-block: 0;
-      padding-inline: 0 var(--padding-3xs);
-
-      .header-logo {
-        grid-area: center;
-      }
-
-      &:not(:has(header-actions)) .search-action {
-        grid-area: leftB;
-      }
-
-      &:not(:has(.account-actions)) .search-action {
-        grid-area: rightA;
-      }
-
-      .search-action {
-        grid-area: leftB;
-      }
-
-      header-actions {
-        grid-area: rightB;
-      }
-    }
-  }
-
-  /* Single column layout if there are no columns within */
-  .header__columns:not(:has(.header__column)) {
-    grid-template-columns: 1fr;
-  }
-
-  /* Check for hover support to avoid unnecessary expensive recalculations when tapping on mobile */
-  @media (hover: hover) {
-    /* Column-specific dimming effect when any interactive element is hovered
-      Multiple selectors for performance: each simple :has() check is faster than one complex selector with multiple conditions */
-    .header__column:has(header-menu:hover),
-    .header__column:has(.header-actions__action:hover),
-    .header__column:has(.dropdown-localization__button:hover),
-    .header__column:has(.header__icon--menu:hover) {
-      header-menu:not(:hover),
-      .header-actions__action:not(:hover),
-      .dropdown-localization__button:not(:hover),
-      .header__icon--menu:not(:hover) {
-        opacity: var(--opacity-subdued-text);
-        transition: opacity var(--animation-speed) var(--animation-easing);
-      }
-    }
-  }
-
-  /* Ensure smooth transitions for all interactive elements */
-  header-menu,
-  .header-actions__action,
-  .dropdown-localization__button,
-  .header__icon--menu {
-    transition: opacity var(--animation-speed) var(--animation-easing);
-  }
-
-  /* Extend hover area through padding to prevent flickering on actual menu items */
-  .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__link[aria-haspopup],
-  .menu-list__list-item:where(:not([slot='overflow'])) > .menu-list__link,
-  .menu-list__list-item:where(:not([slot='overflow'])) > button.menu-list__link {
-    margin-block: calc(-2 * var(--header-padding));
-    padding-block: calc(2 * var(--header-padding));
-    margin-inline: calc(-1 * var(--gap-xl) / 2);
-    padding-inline: calc(var(--gap-xl) / 2);
-  }
-
-  /* Set header paddings based on height setting */
-  .header {
-    --header-padding: var(--padding-sm);
-    --font-paragraph--line-height: 1;
-  }
-
-  .header.header--compact {
-    --header-padding: var(--padding-2xs);
-  }
-
-  .header__columns {
-    --padding-block-start: var(--header-padding);
-    --padding-block-end: var(--header-padding);
-  }
-
-  .header:not(.header--compact) .header__row--bottom {
-    --header-padding: var(--padding-xs);
-  }
-
-  .header--collapse-row-paddings {
-    .header__row--top .header__columns {
-      --padding-block-end: 0px;
-    }
-
-    .header__row--bottom .header__columns {
-      --padding-block-start: 0px;
-    }
-  }
-
-  /* When the header is transparent, add a margin to a potential header-section below it */
-  .header-section:has(.header[transparent]) + .shopify-section {
-    margin-top: var(--header-height);
-  }
-
-  /* When the header is transparent, and when there is no header-section below it, offset the first main-section with
-   * the height of the header
-   */
-
-  main > .shopify-section:first-child .section:not(.disable-section-top-offset) {
-    &.spacing-style,
-    .spacing-style {
-      --section-top-offset: calc(var(--header-height) * var(--transparent-header-offset-boolean));
-
-      /* Any nested sections should not be offset */
-      :is(.spacing-style, .inherit-spacing) {
-        --section-top-offset: 0px;
-      }
-    }
-
-    /* Make sticky content immediately stick to the top of the page */
-    .sticky-content {
-      margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
+    
+    .header__row {
+      padding: 0 1rem;
     }
   }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.header",
-  "tag": "header",
-  "class": "header-section",
+  "name": "Header",
   "settings": [
     {
       "type": "header",
-      "content": "t:content.logo"
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "section_height",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "standard",
+          "label": "Standard"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page width"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "Logo"
     },
     {
       "type": "select",
       "id": "logo_position",
-      "label": "t:settings.position",
+      "label": "Logo position",
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "Left"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "Center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "Right"
         }
       ],
       "default": "center"
     },
     {
       "type": "header",
-      "content": "t:content.menu"
+      "content": "Navigation"
     },
     {
       "type": "select",
       "id": "menu_position",
-      "label": "t:settings.position",
+      "label": "Menu position",
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "Left"
         },
         {
           "value": "center",
-          "label": "t:options.center"
+          "label": "Center"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "Right"
         }
       ],
       "default": "left"
@@ -679,381 +348,291 @@
     {
       "type": "select",
       "id": "menu_row",
-      "label": "t:settings.row",
+      "label": "Menu row",
       "options": [
         {
           "value": "top",
-          "label": "t:options.top"
+          "label": "Top"
         },
         {
           "value": "bottom",
-          "label": "t:options.bottom"
+          "label": "Bottom"
         }
       ],
       "default": "top"
     },
     {
       "type": "header",
-      "content": "t:content.customer_account"
-    },
-    {
-      "type": "paragraph",
-      "content": "t:content.manage_customer_accounts"
-    },
-    {
-      "type": "header",
-      "content": "t:content.search"
+      "content": "Search"
     },
     {
       "type": "checkbox",
       "id": "show_search",
-      "label": "t:settings.search_icon",
+      "label": "Show search",
       "default": true
     },
     {
       "type": "select",
       "id": "search_position",
-      "label": "t:settings.search_position",
+      "label": "Search position",
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "Left"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "Right"
         }
       ],
-      "default": "right",
-      "visible_if": "{{ section.settings.show_search }}"
+      "default": "right"
     },
     {
       "type": "select",
       "id": "search_row",
-      "label": "t:settings.search_row",
+      "label": "Search row",
       "options": [
         {
           "value": "top",
-          "label": "t:options.top"
+          "label": "Top"
         },
         {
           "value": "bottom",
-          "label": "t:options.bottom"
+          "label": "Bottom"
         }
       ],
-      "default": "top",
-      "visible_if": "{{ section.settings.show_search }}"
+      "default": "top"
     },
     {
       "type": "header",
-      "content": "t:content.localization"
+      "content": "Localization"
     },
     {
       "type": "checkbox",
       "id": "show_country",
-      "label": "t:settings.country_region",
-      "info": "t:info.manage_countries_regions",
+      "label": "Show country selector",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "country_selector_style",
-      "label": "t:settings.flag",
-      "default": true,
-      "visible_if": "{{ section.settings.show_country }}"
+      "label": "Show country selector style",
+      "default": false
     },
     {
       "type": "checkbox",
       "id": "show_language",
-      "label": "t:settings.language_selector",
-      "info": "t:info.manage_languages",
+      "label": "Show language selector",
       "default": true
     },
     {
       "type": "select",
       "id": "localization_font",
-      "label": "t:settings.font",
+      "label": "Localization font",
       "options": [
         {
           "value": "heading",
-          "label": "t:options.heading"
-        },
-        {
-          "value": "subheading",
-          "label": "t:options.subheading"
+          "label": "Heading"
         },
         {
           "value": "body",
-          "label": "t:options.body"
-        },
-        {
-          "value": "accent",
-          "label": "t:options.accent"
+          "label": "Body"
         }
       ],
-      "default": "heading",
-      "visible_if": "{{ section.settings.show_country or section.settings.show_language }}"
+      "default": "heading"
     },
     {
-      "type": "select",
+      "type": "range",
       "id": "localization_font_size",
-      "label": "t:settings.size",
-      "options": [
-        {
-          "value": "0.625rem",
-          "label": "10px"
-        },
-        {
-          "value": "0.75rem",
-          "label": "12px"
-        },
-        {
-          "value": "0.875rem",
-          "label": "14px"
-        },
-        {
-          "value": "1rem",
-          "label": "16px"
-        },
-        {
-          "value": "1.125rem",
-          "label": "18px"
-        }
-      ],
-      "default": "1rem"
+      "label": "Localization font size",
+      "min": 0.75,
+      "max": 1.5,
+      "step": 0.125,
+      "default": 1
     },
     {
       "type": "select",
       "id": "localization_position",
-      "label": "t:settings.position",
+      "label": "Localization position",
       "options": [
         {
           "value": "left",
-          "label": "t:options.left"
+          "label": "Left"
         },
         {
           "value": "right",
-          "label": "t:options.right"
+          "label": "Right"
         }
       ],
-      "default": "right",
-      "visible_if": "{{ section.settings.show_country or section.settings.show_language }}"
+      "default": "right"
     },
     {
       "type": "select",
       "id": "localization_row",
-      "label": "t:settings.row",
+      "label": "Localization row",
       "options": [
         {
           "value": "top",
-          "label": "t:options.top"
+          "label": "Top"
         },
         {
           "value": "bottom",
-          "label": "t:options.bottom"
+          "label": "Bottom"
         }
       ],
-      "default": "top",
-      "visible_if": "{{ section.settings.show_country or section.settings.show_language }}"
+      "default": "top"
     },
     {
       "type": "header",
-      "content": "t:content.appearance"
-    },
-    {
-      "type": "select",
-      "id": "section_width",
-      "label": "t:settings.width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ]
-    },
-    {
-      "type": "select",
-      "id": "section_height",
-      "label": "t:settings.height",
-      "options": [
-        {
-          "value": "compact",
-          "label": "t:options.compact"
-        },
-        {
-          "value": "standard",
-          "label": "t:options.standard"
-        }
-      ],
-      "default": "standard"
+      "content": "Sticky header"
     },
     {
       "type": "select",
       "id": "enable_sticky_header",
-      "label": "t:settings.sticky_header",
+      "label": "Enable sticky header",
       "options": [
         {
-          "value": "always",
-          "label": "t:options.always"
-        },
-        {
-          "value": "scroll-up",
-          "label": "t:options.on_scroll_up"
-        },
-        {
           "value": "never",
-          "label": "t:options.never"
+          "label": "Never"
+        },
+        {
+          "value": "always",
+          "label": "Always"
+        },
+        {
+          "value": "on_scroll_up",
+          "label": "On scroll up"
         }
       ],
       "default": "always"
     },
     {
-      "type": "range",
-      "id": "divider_width",
-      "label": "t:settings.divider_thickness",
-      "min": 0,
-      "max": 5,
-      "step": 0.5,
-      "unit": "px",
-      "default": 0,
-      "visible_if": "{{ section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
-    },
-    {
-      "type": "select",
-      "id": "divider_size",
-      "label": "t:settings.divider_width",
-      "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
-      ],
-      "visible_if": "{{ section.settings.divider_width > 0 and section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
-    },
-    {
-      "type": "range",
-      "id": "border_width",
-      "label": "t:settings.border_width",
-      "min": 0,
-      "max": 5,
-      "step": 0.5,
-      "unit": "px",
-      "default": 0
-    },
-    {
       "type": "header",
-      "content": "t:content.colors"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme_top",
-      "label": "t:settings.default",
-      "default": "primary"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme_bottom",
-      "label": "t:settings.bottom_row",
-      "default": "primary",
-      "visible_if": "{{ section.settings.menu_row == 'bottom' or section.settings.localization_row == 'bottom' or section.settings.search_row == 'bottom' }}"
-    },
-    {
-      "type": "color_scheme",
-      "id": "color_scheme_transparent",
-      "label": "t:settings.inverse",
-      "default": "primary",
-      "visible_if": "{{ section.settings.enable_transparent_header_home or section.settings.enable_transparent_header_product or section.settings.enable_transparent_header_collection }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.home_page"
+      "content": "Transparent header"
     },
     {
       "type": "checkbox",
       "id": "enable_transparent_header_home",
-      "label": "t:settings.transparent_background",
-      "default": false
+      "label": "Enable transparent header on homepage",
+      "default": true
     },
     {
       "type": "select",
       "id": "home_color_scheme",
-      "label": "t:settings.color_scheme",
+      "label": "Homepage color scheme",
       "options": [
         {
           "value": "default",
-          "label": "t:options.default"
+          "label": "Default"
         },
         {
           "value": "inverse",
-          "label": "t:options.inverse"
+          "label": "Inverse"
         }
       ],
-      "default": "default",
-      "visible_if": "{{ section.settings.enable_transparent_header_home }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.product_page"
+      "default": "inverse"
     },
     {
       "type": "checkbox",
       "id": "enable_transparent_header_product",
-      "label": "t:settings.transparent_background",
-      "default": false
+      "label": "Enable transparent header on product pages",
+      "default": true
     },
     {
       "type": "select",
       "id": "product_color_scheme",
-      "label": "t:settings.color_scheme",
+      "label": "Product page color scheme",
       "options": [
         {
           "value": "default",
-          "label": "t:options.default"
+          "label": "Default"
         },
         {
           "value": "inverse",
-          "label": "t:options.inverse"
+          "label": "Inverse"
         }
       ],
-      "default": "default",
-      "visible_if": "{{ section.settings.enable_transparent_header_product }}"
-    },
-    {
-      "type": "header",
-      "content": "t:content.collection_page"
+      "default": "default"
     },
     {
       "type": "checkbox",
       "id": "enable_transparent_header_collection",
-      "label": "t:settings.transparent_background",
-      "default": false
+      "label": "Enable transparent header on collection pages",
+      "default": true
     },
     {
       "type": "select",
       "id": "collection_color_scheme",
-      "label": "t:settings.color_scheme",
+      "label": "Collection page color scheme",
       "options": [
         {
           "value": "default",
-          "label": "t:options.default"
+          "label": "Default"
         },
         {
           "value": "inverse",
-          "label": "t:options.inverse"
+          "label": "Inverse"
         }
       ],
-      "default": "default",
-      "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
+      "default": "inverse"
+    },
+    {
+      "type": "header",
+      "content": "Divider"
+    },
+    {
+      "type": "range",
+      "id": "divider_width",
+      "label": "Divider width",
+      "min": 0,
+      "max": 10,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "divider_size",
+      "label": "Divider size",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "Page width"
+        },
+        {
+          "value": "full-width",
+          "label": "Full width"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "Color scheme"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme_transparent",
+      "label": "Transparent color scheme",
+      "default": "scheme-6"
     }
   ],
-  "presets": []
+  "blocks": [
+    {
+      "type": "_header-logo",
+      "name": "Logo",
+      "limit": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
+    }
+  ]
 }
 {% endschema %}
