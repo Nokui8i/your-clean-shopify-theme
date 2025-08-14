@@ -37,8 +37,8 @@
         "color_scheme_transparent": "scheme-1",
         "show_language": true,
         "show_currency": true,
-        "logo_position": "left",
-        "menu_position": "center",
+        "logo_position": "center",
+        "menu_position": "left",
         "sticky_header_behavior": "always"
       }
     },
