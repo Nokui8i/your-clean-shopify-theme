@@ -39,7 +39,7 @@
             "image_border_radius": 0,
             "product_title_case": "uppercase",
             "collection_title_case": "default",
-            "color_scheme": "",
+            "color_scheme": "scheme-1",
             "menu_font_style": "inverse",
             "type_font_primary_link": "subheading",
             "type_font_primary_size": "var(--font-size--body-md)",
@@ -82,9 +82,9 @@
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": true,
         "home_color_scheme": "inverse",
-        "enable_transparent_header_product": false,
+        "enable_transparent_header_product": true,
         "product_color_scheme": "default",
-        "enable_transparent_header_collection": false,
+        "enable_transparent_header_collection": true,
         "collection_color_scheme": "default"
       }
     }

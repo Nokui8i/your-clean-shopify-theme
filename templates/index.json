@@ -90,42 +90,11 @@
     },
     "hero_irjTFL": {
       "type": "hero",
-      "blocks": {
-        "text_CXHmij": {
-          "type": "text",
-          "name": "t:names.text",
-          "settings": {
-            "text": "<h1><em>Enrich </em>the<em> </em><br/>everyday</h1>",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
-            "font": "var(--font-tertiary--family)",
-            "font_size": "var(--font-size--heading-xl)",
-            "line_height": "tight",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_CXHmij"
-      ],
       "name": "Hero",
       "settings": {
         "media_type_1": "image",
         "media_type_2": "image",
-        "link": "shopify://collections",
+        "link": "",
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -283,6 +252,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -392,6 +362,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "name": "t:names.featured_product",
       "settings": {
         "product": "",
@@ -489,6 +460,7 @@
           "block_order": []
         }
       },
+      "disabled": true,
       "name": "t:names.featured_product",
       "settings": {
         "product": "",
@@ -699,6 +671,7 @@
           ]
         }
       },
+      "disabled": true,
       "name": "Featured collection",
       "settings": {
         "collection": "all",
@@ -804,7 +777,7 @@
         "icons_shape": "none",
         "section_width": "full-width",
         "gap": 0,
-        "color_scheme": "",
+        "color_scheme": "scheme-2",
         "padding-block-start": 48,
         "padding-block-end": 48
       }
