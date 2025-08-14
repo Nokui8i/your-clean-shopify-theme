@@ -1,5 +1,93 @@
 {
   "sections": {
+    "announcement_bar": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_1": {
+          "type": "_announcement",
+          "settings": {
+            "text": "LIMITED OFFER ! 20% OFF",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["announcement_1"],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_width": "full-width",
+        "divider_width": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "hero_section": {
+      "type": "hero",
+      "blocks": {
+        "hero_content": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "gap": 24,
+            "width": "custom",
+            "custom_width": 50,
+            "color_scheme": ""
+          },
+          "blocks": {
+            "hero_title": {
+              "type": "text",
+              "settings": {
+                "text": "<h1>ANIME INSPIRED STREETWEAR</h1>",
+                "width": "100%",
+                "alignment": "center",
+                "type_preset": "h1",
+                "font_size": "3.5rem",
+                "case": "uppercase",
+                "color": ""
+              }
+            },
+            "hero_subtitle": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Premium quality clothing inspired by your favorite anime characters</p>",
+                "width": "100%",
+                "alignment": "center",
+                "type_preset": "h3",
+                "font_size": "1.5rem",
+                "case": "none",
+                "color": ""
+              }
+            },
+            "hero_button": {
+              "type": "button",
+              "settings": {
+                "label": "SHOP NOW",
+                "link": "shopify://collections/all",
+                "style_class": "button--primary",
+                "width": "fit-content"
+              }
+            }
+          },
+          "block_order": ["hero_title", "hero_subtitle", "hero_button"]
+        }
+      },
+      "block_order": ["hero_content"],
+      "settings": {
+        "media_type_1": "image",
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "center",
+        "vertical_alignment": "center",
+        "gap": 32,
+        "section_width": "full-width",
+        "section_height": "large",
+        "color_scheme": "scheme-5",
+        "padding-block-start": 80,
+        "padding-block-end": 80
+      }
+    },
     "hot_products": {
       "type": "product-list",
       "blocks": {
@@ -138,6 +226,8 @@
     }
   },
   "order": [
+    "announcement_bar",
+    "hero_section",
     "hot_products",
     "collections_section",
     "best_sellers",
