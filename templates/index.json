@@ -42,6 +42,62 @@
         "sticky_header_behavior": "always"
       }
     },
+    "hot_now_collection": {
+      "type": "featured-collection",
+      "name": "HOT NOW",
+      "blocks": {
+        "collection_title": {
+          "type": "text",
+          "name": "Collection Title",
+          "settings": {
+            "text": "HOT NOW",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "type_preset": "h2",
+            "font": "var(--font-primary--family)",
+            "font_size": "var(--font-size--heading-lg)",
+            "line_height": "tight",
+            "letter_spacing": "normal",
+            "case": "uppercase",
+            "wrap": "pretty",
+            "color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "collection_title"
+      ],
+      "settings": {
+        "collection": "",
+        "products_to_show": 3,
+        "columns_desktop": 3,
+        "columns_mobile": 1,
+        "color_scheme": "scheme-1",
+        "section_width": "page-width",
+        "padding-block-start": 48,
+        "padding-block-end": 48,
+        "show_view_all": false,
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "enable_quick_view": false,
+        "enable_quick_shop": false,
+        "card_style": "minimal",
+        "card_hover_effect": "lift",
+        "show_collection_description": false,
+        "collection_description_style": "body"
+      }
+    },
     "hero_irjTFL": {
       "type": "hero",
       "blocks": {
@@ -761,6 +817,7 @@
   "order": [
     "announcement_bar",
     "header",
+    "hot_now_collection",
     "hero_irjTFL",
     "product_list_x9Yaab",
     "featured_product_yEF9dK",
