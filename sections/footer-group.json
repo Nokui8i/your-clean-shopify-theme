@@ -36,8 +36,7 @@
                 "menu_spacing": 8,
                 "show_as_accordion": false,
                 "heading_preset": "h4",
-                "link_preset": "paragraph",
-                "case": "uppercase"
+                "link_preset": "paragraph"
               }
             },
             "anime_menu": {
@@ -49,8 +48,7 @@
                 "menu_spacing": 8,
                 "show_as_accordion": false,
                 "heading_preset": "h4",
-                "link_preset": "paragraph",
-                "case": "uppercase"
+                "link_preset": "paragraph"
               }
             },
             "support_menu": {
@@ -62,8 +60,7 @@
                 "menu_spacing": 8,
                 "show_as_accordion": false,
                 "heading_preset": "h4",
-                "link_preset": "paragraph",
-                "case": "uppercase"
+                "link_preset": "paragraph"
               }
             },
             "newsletter_section": {
@@ -102,18 +99,28 @@
                     "border_width": 1,
                     "border_radius": 0,
                     "label": "Enter your email",
-                    "integrated_button": true,
-                    "button_label": "Subscribe"
+                    "integrated_button": true
                   }
                 }
               },
-              "block_order": ["newsletter_heading", "newsletter_text", "newsletter_signup"]
+              "block_order": [
+                "newsletter_heading",
+                "newsletter_text",
+                "newsletter_signup"
+              ]
             }
           },
-          "block_order": ["shop_menu", "anime_menu", "support_menu", "newsletter_section"]
+          "block_order": [
+            "shop_menu",
+            "anime_menu",
+            "support_menu",
+            "newsletter_section"
+          ]
         }
       },
-      "block_order": ["footer_columns"],
+      "block_order": [
+        "footer_columns"
+      ],
       "settings": {
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -155,6 +162,7 @@
             "social_icons": {
               "type": "_footer-social-icons",
               "static": true,
+              "settings": {},
               "blocks": {
                 "instagram": {
                   "type": "_social-link",
@@ -178,13 +186,19 @@
                   }
                 }
               },
-              "block_order": ["instagram", "facebook", "tiktok"]
+              "block_order": [
+                "instagram",
+                "facebook",
+                "tiktok"
+              ]
             }
           },
           "block_order": []
         }
       },
-      "block_order": ["footer_utilities"],
+      "block_order": [
+        "footer_utilities"
+      ],
       "settings": {
         "content_direction": "column",
         "horizontal_alignment": "center",
