@@ -759,6 +759,8 @@
     }
   },
   "order": [
+    "announcement_bar",
+    "header",
     "hero_irjTFL",
     "product_list_x9Yaab",
     "featured_product_yEF9dK",
