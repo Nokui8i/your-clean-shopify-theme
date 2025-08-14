@@ -1,5 +1,3 @@
-
-
 {% liquid
   assign order = 'logo,menu,localization,search,mobile_search,actions'
 
@@ -180,68 +178,33 @@
   data-skip-node-update
   data-scroll-direction="none"
 >
-  {% for row in rows %}
-    {% liquid
-      assign scheme = 'color_scheme_' | append: row
-      assign class = 'header__row header__row--[row] color-[row_scheme] section section--full-width-margin section--[section-width]' | replace: '[row]', row | replace: '[row_scheme]', section.settings[scheme] | replace: '[section-width]', section.settings.section_width
+  <!-- Top Row: Search, Logo, Cart -->
+  <div class="header__row header__row--top color-{{ section.settings.color_scheme_top }} section section--full-width-margin section--{{ section.settings.section_width }}">
+    <div class="header__columns header__columns--top-row spacing-style">
+      <div class="header__column header__column--left">
+        {% if section.settings.show_search %}
+          {{ search }}
+        {% endif %}
+      </div>
+      <div class="header__column header__column--center">
+        {{ logo }}
+      </div>
+      <div class="header__column header__column--right">
+        {{ actions }}
+      </div>
+    </div>
+  </div>
 
-      case row
-        when 'top'
-          assign first = mobile_menu
-
-          if bottom_row_blocks.size > 0 and section.settings.divider_size == 'page-width'
-            assign class = class | append: ' divider--page-width'
-          endif
-
-          if bottom_row_blocks.size > 0
-            assign border_bottom_setting_id = 'divider_width'
-          else
-            assign border_bottom_setting_id = 'border_width'
-          endif
-        when 'bottom'
-          assign first = ''
-          assign class = class | append: ' mobile:hidden'
-
-          assign border_bottom_setting_id = 'border_width'
-      endcase
-
-      assign style = '--border-bottom-width: [width]px; ' | replace: '[width]', section.settings[border_bottom_setting_id]
-
-      if row == 'top'
-        assign style = style | append: '--border-bottom-width-mobile: [width]px; ' | replace: '[width]', section.settings.border_width
-      endif
-    %}
-
-    {% capture content %}
-      {% render 'header-row',
-        row: row,
-        order: order,
-        settings: section.settings,
-        first: first,
-        logo: logo,
-        menu: menu,
-        actions: actions,
-        localization: localization_markup,
-        search: search,
-        mobile_search: mobile_search
-      %}
-    {% endcapture %}
-
-    {% assign content = content | strip %}
-    {% if content != blank %}
-      <div
-        class="{{ class | strip }}"
-        ref="headerRowTop"
-        {%- if style != blank -%}
-          style="{{ style | strip }}"
-        {%- endif -%}
-      >
-        <div class="header__columns spacing-style">
-          {{ content }}
+  <!-- Bottom Row: Navigation Menu -->
+  {% if section.settings.menu_row == 'bottom' %}
+    <div class="header__row header__row--bottom color-{{ section.settings.color_scheme_bottom }} section section--full-width-margin section--{{ section.settings.section_width }}">
+      <div class="header__columns header__columns--bottom-row spacing-style">
+        <div class="header__column header__column--center">
+          {{ menu }}
         </div>
       </div>
-    {% endif %}
-  {% endfor %}
+    </div>
+  {% endif %}
 
   {% if navigation_bar != blank %}
     <div class="header__row header__row--mobile desktop:hidden color-{{ section.settings.color_scheme_bottom }}">
@@ -325,7 +288,7 @@
       :has(
           .mega-menu__list:hover,
           .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating]),
-          .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])
+          .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating]))
         )
     ) {
     /* while transparent, header-row ignores its color-scheme settings, pull from the header-component */
@@ -339,11 +302,11 @@
 
   .header--inherit-color-scheme-on-menu-open:has(.mega-menu__list:hover) .header__row,
   .header--inherit-color-scheme-on-menu-open:has(
-      .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating])
+      .menu-list__link[aria-haspopup]:is(:hover, [aria-expanded='true'], [data-animating]))
     )
     .header__row,
   .header--inherit-color-scheme-on-menu-open:has(
-      .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating])
+      .menu-list__list-item[slot='overflow'] .menu-list__link:is(:hover, [aria-expanded='true'], [data-animating]))
     )
     .header__row {
     --color-foreground: inherit;
@@ -619,6 +582,27 @@
     .sticky-content {
       margin-top: calc(var(--header-height) * var(--transparent-header-offset-boolean) * -1);
     }
+  }
+
+  /* NEW CSS FOR ANIQI LAYOUT */
+  .header__columns--top-row {
+    --header-left: 1fr;
+    --header-center: auto;
+    --header-right: 1fr;
+    --header-template-columns: var(--header-left) var(--header-center) var(--header-right);
+    
+    display: grid;
+    grid-template-areas: 'left center right';
+    grid-gap: var(--gap-xl);
+    grid-template-columns: var(--header-template-columns);
+    align-items: center;
+  }
+
+  .header__columns--bottom-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
   }
 {% endstylesheet %}
 
