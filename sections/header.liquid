@@ -71,6 +71,8 @@
   .header {
     transition: all 0.3s ease;
     background: rgba(0, 0, 0, 0.9);
+    position: relative;
+    z-index: 1000;
   }
   
   .header--scrolled {
@@ -79,16 +81,17 @@
   }
   
   .header--transparent {
-    background: transparent;
+    background: transparent !important;
   }
   
   .header--transparent.header--scrolled {
-    background: rgba(0, 0, 0, 0.95);
+    background: rgba(0, 0, 0, 0.95) !important;
   }
   
   .header__nav-link {
     position: relative;
     transition: color 0.3s ease;
+    color: white !important;
   }
   
   .header__nav-link::after {
@@ -107,7 +110,7 @@
   }
   
   .header__nav-link:hover {
-    color: #ff0000;
+    color: #ff0000 !important;
   }
   
   .dropdown-menu {
@@ -143,6 +146,28 @@
     background: rgba(255, 0, 0, 0.2);
     color: #ff0000;
   }
+  
+  /* Ensure hero section content is visible over transparent header */
+  .hero {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .hero__content {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Force header transparency on homepage */
+  {% if template == 'index' %}
+  .header {
+    background: transparent !important;
+  }
+  
+  .header--scrolled {
+    background: rgba(0, 0, 0, 0.95) !important;
+  }
+  {% endif %}
 </style>
 
 <header
@@ -253,6 +278,11 @@
   document.addEventListener('DOMContentLoaded', function() {
     const header = document.getElementById('main-header');
     let lastScrollTop = 0;
+    
+    // Force transparency on homepage
+    if (window.location.pathname === '/' || window.location.pathname === '/index') {
+      header.classList.add('header--transparent');
+    }
     
     window.addEventListener('scroll', function() {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;

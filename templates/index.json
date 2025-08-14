@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "header_FfAgnc": {
@@ -25,10 +16,10 @@
         "section_height": "large",
         "section_width": "page-width",
         "logo_position": "center",
-        "menu_position": "left",
+        "menu_position": "center",
         "menu_row": "top",
         "show_search": true,
-        "search_position": "right",
+        "search_position": "left",
         "search_row": "top",
         "show_country": true,
         "country_selector_style": false,
@@ -37,7 +28,7 @@
         "localization_font_size": 1,
         "localization_position": "right",
         "localization_row": "top",
-        "enable_sticky_header": "on_scroll_up",
+        "enable_sticky_header": "always",
         "enable_transparent_header_home": true,
         "home_color_scheme": "inverse",
         "enable_transparent_header_product": true,
@@ -47,11 +38,73 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "color_scheme": "scheme-6",
-        "color_scheme_transparent": ""
+        "color_scheme_transparent": "scheme-6"
       }
     },
     "hero_section": {
       "type": "hero",
+      "blocks": {
+        "hero_content": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "center",
+            "vertical_alignment": "center",
+            "gap": 24,
+            "width": "custom",
+            "custom_width": 50,
+            "color_scheme": ""
+          },
+          "blocks": {
+            "hero_title": {
+              "type": "text",
+              "settings": {
+                "text": "<h1>ANIME INSPIRED STREETWEAR</h1>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h1",
+                "font": "var(--font-heading--family)",
+                "font_size": "3.5rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)"
+              }
+            },
+            "hero_subtitle": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Premium quality clothing inspired by your favorite anime characters</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "h3",
+                "font": "var(--font-body--family)",
+                "font_size": "1.5rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)"
+              }
+            },
+            "hero_button": {
+              "type": "button",
+              "settings": {
+                "label": "SHOP NOW",
+                "link": "shopify://collections/all",
+                "style_class": "button--primary",
+                "width": "fit-content"
+              }
+            }
+          },
+          "block_order": ["hero_title", "hero_subtitle", "hero_button"]
+        }
+      },
+      "block_order": ["hero_content"],
       "settings": {
         "media_type_1": "image",
         "image_1": "shopify://shop_images/Flux_Dev_Professional_graphic_design_3D_render_Ultrarealistic__0.jpg",
@@ -76,7 +129,7 @@
         "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
-        "padding-block-start": 80,
+        "padding-block-start": 0,
         "padding-block-end": 80
       }
     },
