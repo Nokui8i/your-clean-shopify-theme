@@ -1,5 +1,25 @@
 {
   "sections": {
+    "announcement_bar": {
+      "type": "header-announcements",
+      "blocks": {
+        "announcement_1": {
+          "type": "announcement",
+          "settings": {
+            "text": "LIMITED OFFER! 20% OFF ON THE SECOND PRODUCT",
+            "link": ""
+          }
+        }
+      },
+      "block_order": ["announcement_1"],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_width": "full-width",
+        "divider_width": 0,
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
     "hero_section": {
       "type": "hero",
       "blocks": {
@@ -68,61 +88,41 @@
         "padding-block-end": 80
       }
     },
-    "announcement_bar": {
-      "type": "announcement",
-      "settings": {
-        "text": "LIMITED OFFER! 20% OFF ON THE SECOND PRODUCT",
-        "link": "",
-        "color_scheme": "scheme-4",
-        "show_social_media": false
-      }
-    },
     "featured_collections": {
       "type": "collection-list",
       "blocks": {
-        "collection_1": {
-          "type": "collection",
+        "header_group": {
+          "type": "group",
           "settings": {
-            "collection": "shirts",
-            "image_ratio": "square",
-            "show_collection_info": true,
-            "collection_title_case": "uppercase"
-          }
-        },
-        "collection_2": {
-          "type": "collection",
-          "settings": {
-            "collection": "hoodies",
-            "image_ratio": "square",
-            "show_collection_info": true,
-            "collection_title_case": "uppercase"
-          }
-        },
-        "collection_3": {
-          "type": "collection",
-          "settings": {
-            "collection": "shorts",
-            "image_ratio": "square",
-            "show_collection_info": true,
-            "collection_title_case": "uppercase"
-          }
-        },
-        "collection_4": {
-          "type": "collection",
-          "settings": {
-            "collection": "joggers",
-            "image_ratio": "square",
-            "show_collection_info": true,
-            "collection_title_case": "uppercase"
-          }
+            "content_direction": "column",
+            "horizontal_alignment": "center",
+            "gap": 16,
+            "width": "fill"
+          },
+          "blocks": {
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>COLLECTIONS</h2>",
+                "alignment": "center",
+                "type_preset": "h2",
+                "case": "uppercase"
+              }
+            }
+          },
+          "block_order": ["heading"]
         }
       },
-      "block_order": ["collection_1", "collection_2", "collection_3", "collection_4"],
+      "block_order": ["header_group"],
       "settings": {
-        "heading": "COLLECTIONS",
-        "heading_alignment": "center",
+        "collection_list": [],
+        "layout_type": "grid",
         "columns": 4,
         "mobile_columns": "2",
+        "columns_gap": 16,
+        "rows_gap": 16,
+        "section_width": "page-width",
+        "gap": 32,
         "color_scheme": "scheme-1",
         "padding-block-start": 80,
         "padding-block-end": 80
@@ -161,7 +161,7 @@
         "mobile_columns": "2",
         "color_scheme": "scheme-2",
         "padding-block-start": 80,
-        "padding-block-end": 80"
+        "padding-block-end": 80
       }
     },
     "newsletter_signup": {
@@ -173,7 +173,7 @@
         "custom_width": 50,
         "color_scheme": "scheme-3",
         "padding-block-start": 80,
-        "padding-block-end": 80"
+        "padding-block-end": 80
       }
     }
   },
