@@ -11,6 +11,15 @@
   "sections": {
     "header_FfAgnc": {
       "type": "header",
+      "blocks": {
+        "header_logo_CRH6yc": {
+          "type": "header-logo",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "header_logo_CRH6yc"
+      ],
       "name": "Header",
       "settings": {
         "section_height": "small",
@@ -28,7 +37,7 @@
         "localization_font_size": 1,
         "localization_position": "right",
         "localization_row": "top",
-        "enable_sticky_header": "always",
+        "enable_sticky_header": "on_scroll_up",
         "enable_transparent_header_home": true,
         "home_color_scheme": "inverse",
         "enable_transparent_header_product": true,
@@ -37,7 +46,7 @@
         "collection_color_scheme": "inverse",
         "divider_width": 0,
         "divider_size": "page-width",
-        "color_scheme": "",
+        "color_scheme": "scheme-6",
         "color_scheme_transparent": ""
       }
     },
