@@ -9,28 +9,8 @@
  */
 {
   "type": "header",
-  "name": "Header",
+  "name": "t:names.header",
   "sections": {
-    "announcement_bar": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_1": {
-          "type": "_announcement",
-          "settings": {
-            "text": "LIMITED OFFER ! 20% OFF",
-            "link": ""
-          }
-        }
-      },
-      "block_order": ["announcement_1"],
-      "settings": {
-        "color_scheme": "scheme-4",
-        "section_width": "full-width",
-        "divider_width": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -39,8 +19,8 @@
           "static": true,
           "settings": {
             "hide_logo_on_home_page": false,
-            "custom_height": 40,
-            "custom_height_mobile": 32,
+            "custom_height": 36,
+            "custom_height_mobile": 28,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -53,21 +33,21 @@
           "static": true,
           "settings": {
             "menu": "main-menu",
-            "menu_style": "featured_collections",
+            "menu_style": "featured_products",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
-            "product_title_case": "default",
+            "product_title_case": "uppercase",
             "collection_title_case": "default",
             "color_scheme": "",
-            "menu_font_style": "inverse_large",
+            "menu_font_style": "inverse",
             "type_font_primary_link": "subheading",
-            "type_font_primary_size": "1.125rem",
-            "type_case_primary_link": "uppercase",
-            "type_font_secondary_link": "subheading",
-            "type_case_secondary_link": "uppercase",
-            "type_font_tertiary_link": "subheading",
-            "type_case_tertiary_link": "uppercase",
+            "type_font_primary_size": "var(--font-size--body-md)",
+            "type_case_primary_link": "none",
+            "type_font_secondary_link": "secondary",
+            "type_case_secondary_link": "none",
+            "type_font_tertiary_link": "secondary",
+            "type_case_tertiary_link": "none",
             "navigation_bar": false,
             "color_scheme_navigation_bar": "",
             "drawer_accordion": false,
@@ -78,39 +58,38 @@
         }
       },
       "settings": {
-        "logo_position": "center",
+        "logo_position": "left",
         "menu_position": "center",
         "menu_row": "top",
         "show_search": true,
-        "search_position": "left",
+        "search_position": "right",
         "search_row": "top",
         "show_country": true,
         "country_selector_style": false,
         "show_language": true,
         "localization_font": "heading",
-        "localization_font_size": "1rem",
+        "localization_font_size": "0.875rem",
         "localization_position": "right",
         "localization_row": "top",
-        "section_width": "full-width",
+        "section_width": "page-width",
         "section_height": "standard",
-        "enable_sticky_header": "always",
+        "enable_sticky_header": "scroll-up",
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
-        "color_scheme_top": "scheme-6",
-        "color_scheme_bottom": "scheme-6",
+        "color_scheme_top": "",
+        "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
         "enable_transparent_header_home": true,
         "home_color_scheme": "inverse",
-        "enable_transparent_header_product": true,
+        "enable_transparent_header_product": false,
         "product_color_scheme": "default",
-        "enable_transparent_header_collection": true,
-        "collection_color_scheme": "inverse"
+        "enable_transparent_header_collection": false,
+        "collection_color_scheme": "default"
       }
     }
   },
   "order": [
-    "announcement_bar",
     "header_section"
   ]
 }

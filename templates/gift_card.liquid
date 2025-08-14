@@ -71,7 +71,7 @@
 
     {{ content_for_header }}
 
-    {% comment %}theme-check-disable AssetPreload{% endcomment %}
+    {% # theme-check-disable AssetPreload %}
     {%- unless settings.type_primary_font.system? -%}
       <link
         rel="preload"
@@ -100,7 +100,7 @@
       >
     {%- endunless -%}
 
-    {% comment %}theme-check-enable AssetPreload{% endcomment %}
+    {% # theme-check-enable AssetPreload %}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
 

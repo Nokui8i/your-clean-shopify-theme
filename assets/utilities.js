@@ -310,278 +310,294 @@ export function isPointWithinElement(x, y, element) {
   return x >= left && x <= right && y >= top && y <= bottom;
 }
 
-// Media Query Utilities
-export const mediaQueryLarge = window.matchMedia('(min-width: 990px)');
+/**
+ * A media query for large screens
+ * @type {MediaQueryList}
+ */
+export const mediaQueryLarge = matchMedia('(min-width: 750px)');
 
-// Mobile Breakpoint Check
+/**
+ * Check if the current breakpoint is mobile
+ * @returns {boolean} True if the current breakpoint is mobile, false otherwise
+ */
 export function isMobileBreakpoint() {
   return !mediaQueryLarge.matches;
 }
 
-// Debounce function
-export function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
+/**
+ * Check if the current breakpoint is desktop
+ * @returns {boolean} True if the current breakpoint is desktop, false otherwise
+ */
+export function isDesktopBreakpoint() {
+  return mediaQueryLarge.matches;
 }
 
-// Throttle function
-export function throttle(func, limit) {
-  let inThrottle;
-  return function() {
-    const args = arguments;
-    const context = this;
-    if (!inThrottle) {
-      func.apply(context, args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  };
-}
-
-// Request Idle Callback
-export function requestIdleCallback(callback) {
-  if (window.requestIdleCallback) {
-    return window.requestIdleCallback(callback);
-  }
-  return setTimeout(callback, 1);
-}
-
-// View Transition
-export const viewTransition = {
-  current: null
-};
-
-// Scheduler
-export const scheduler = {
-  schedule: (task) => {
-    if (window.requestIdleCallback) {
-      requestIdleCallback(task);
-    } else {
-      setTimeout(task, 0);
-    }
-  }
-};
-
-// Utility functions
+/**
+ * Clamps a number between a minimum and maximum value.
+ * @param {number} value - The input number to clamp.
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ * @returns {number} The clamped value.
+ */
 export function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
+  return Math.max(min, Math.min(value, max));
 }
 
+/**
+ * Calculates the center point of an element along the specified axis.
+ * @param {Element} element - The DOM element to find the center of.
+ * @param {'x' | 'y'} [axis] - The axis ('x' or 'y') to get the center for. If not provided, returns both axes.
+ * @template {('x' | 'y')} T
+ * @param {T} [axis]
+ * @returns {T extends ('x' | 'y') ? number : {x: number, y: number}} The center point along the axis or an object with x and y coordinates.
+ */
 export function center(element, axis) {
-  const rect = element.getBoundingClientRect();
-  return axis === 'x' ? rect.left + rect.width / 2 : rect.top + rect.height / 2;
+  const { left, width, top, height } = element.getBoundingClientRect();
+  const point = {
+    x: left + width / 2,
+    y: top + height / 2,
+  };
+
+  if (axis) return /**  @type {any} */ (point[axis]);
+
+  return /**  @type {any} */ (point);
 }
 
+/**
+ * Calculates the start point of an element along the specified axis.
+ * @param {Element} element - The DOM element to find the start of.
+ * @param {'x' | 'y'} [axis] - The axis ('x' or 'y') to get the start for. If not provided, returns both axes.
+ * @returns {number | {x: number, y: number}} The start point along the axis or an object with x and y coordinates.
+ */
+export function start(element, axis) {
+  const { left, top } = element.getBoundingClientRect();
+  const point = { x: left, y: top };
+
+  if (axis) return /**  @type {any} */ (point[axis]);
+
+  return /**  @type {any} */ (point);
+}
+
+/**
+ * Finds the value in an array that is closest to a target value.
+ * @param {number[]} values - An array of numbers.
+ * @param {number} target - The target number to find the closest value to.
+ * @returns {number} The value from the array closest to the target.
+ */
 export function closest(values, target) {
-  return values.reduce((prev, curr) => {
+  return values.reduce(function (prev, curr) {
     return Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev;
   });
 }
 
-export function getVisibleElements(container, elements, threshold = 0.5, axis = 'x') {
-  if (!elements || !elements.length) return [];
-  
-  const containerRect = container.getBoundingClientRect();
-  const visible = [];
-  
-  for (const element of elements) {
-    const elementRect = element.getBoundingClientRect();
-    let visibleRatio;
-    
-    if (axis === 'x') {
-      const overlap = Math.min(elementRect.right, containerRect.right) - Math.max(elementRect.left, containerRect.left);
-      visibleRatio = overlap / elementRect.width;
-    } else {
-      const overlap = Math.min(elementRect.bottom, containerRect.bottom) - Math.max(elementRect.top, containerRect.top);
-      visibleRatio = overlap / elementRect.height;
-    }
-    
-    if (visibleRatio >= threshold) {
-      visible.push(element);
-    }
-  }
-  
-  return visible;
-}
-
+/**
+ * Prevents the default action of an event.
+ * @param {Event} event - The event to prevent the default action of.
+ */
 export function preventDefault(event) {
   event.preventDefault();
 }
 
-export function isClickedOutside(element, event) {
-  return !element.contains(event.target);
-}
+/**
+ * Get the visible elements within a root element.
+ * @template {Element} T
+ * @param {Element} root - The element within which elements should be visible.
+ * @param {T[] | undefined} elements - The elements to check for visibility.
+ * @param {number} [ratio=1] - The minimum percentage of the element that must be visible.
+ * @param {'x' | 'y'} [axis] - Whether to only check along 'x' axis, 'y' axis, or both if undefined.
+ * @returns {T[]} An array containing the visible elements.
+ */
+export function getVisibleElements(root, elements, ratio = 1, axis) {
+  if (!elements?.length) return [];
+  const rootRect = root.getBoundingClientRect();
 
-export function onAnimationEnd(element, callback) {
-  const handleAnimationEnd = () => {
-    element.removeEventListener('animationend', handleAnimationEnd);
-    callback();
-  };
-  element.addEventListener('animationend', handleAnimationEnd);
-}
+  return elements.filter((element) => {
+    const { width, height, top, right, left, bottom } = element.getBoundingClientRect();
 
-export function prefersReducedMotion() {
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-}
+    if (ratio < 1) {
+      const intersectionLeft = Math.max(rootRect.left, left);
+      const intersectionRight = Math.min(rootRect.right, right);
+      const intersectionWidth = Math.max(0, intersectionRight - intersectionLeft);
 
-export function resetShimmer(element) {
-  element.style.animation = 'none';
-  element.offsetHeight; // Trigger reflow
-  element.style.animation = null;
-}
-
-export function formatMoney(amount, currency = 'USD') {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: currency
-  }).format(amount);
-}
-
-export function touchToPoint(touch) {
-  return {
-    x: touch.clientX,
-    y: touch.clientY
-  };
-}
-
-export function getDistance(point1, point2) {
-  const dx = point1.x - point2.x;
-  const dy = point1.y - point2.y;
-  return Math.sqrt(dx * dx + dy * dy);
-}
-
-export function getMidpoint(point1, point2) {
-  return {
-    x: (point1.x + point2.x) / 2,
-    y: (point1.y + point2.y) / 2
-  };
-}
-
-export function trapFocus(container) {
-  const focusableElements = container.querySelectorAll(
-    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-  );
-  
-  if (focusableElements.length === 0) return;
-  
-  const firstElement = focusableElements[0];
-  const lastElement = focusableElements[focusableElements.length - 1];
-  
-  container.addEventListener('keydown', function(e) {
-    if (e.key === 'Tab') {
-      if (e.shiftKey) {
-        if (document.activeElement === firstElement) {
-          e.preventDefault();
-          lastElement.focus();
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          e.preventDefault();
-          firstElement.focus();
-        }
+      if (axis === 'x') {
+        return width > 0 && intersectionWidth / width >= ratio;
       }
+
+      const intersectionTop = Math.max(rootRect.top, top);
+      const intersectionBottom = Math.min(rootRect.bottom, bottom);
+      const intersectionHeight = Math.max(0, intersectionBottom - intersectionTop);
+
+      if (axis === 'y') {
+        return height > 0 && intersectionHeight / height >= ratio;
+      }
+
+      const intersectionArea = intersectionWidth * intersectionHeight;
+      const elementArea = width * height;
+
+      // Check that at least the specified ratio of the element is visible
+      return elementArea > 0 && intersectionArea / elementArea >= ratio;
     }
+
+    const isWithinX = left >= rootRect.left && right <= rootRect.right;
+    if (axis === 'x') {
+      return isWithinX;
+    }
+
+    const isWithinY = top >= rootRect.top && bottom <= rootRect.bottom;
+    if (axis === 'y') {
+      return isWithinY;
+    }
+
+    return isWithinX && isWithinY;
   });
-  
-  firstElement.focus();
 }
 
-export function removeTrapFocus(container) {
-  // Remove event listeners if needed
-}
+export function getIOSVersion() {
+  const { userAgent } = navigator;
+  const isIOS = /(iPhone|iPad)/i.test(userAgent);
 
-export function cycleFocus(elements, direction = 1) {
-  const currentIndex = elements.findIndex(el => el === document.activeElement);
-  const nextIndex = (currentIndex + direction + elements.length) % elements.length;
-  elements[nextIndex].focus();
-}
+  if (!isIOS) return null;
 
-export function onDocumentLoaded(callback) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', callback);
-  } else {
-    callback();
-  }
-}
+  const version = userAgent.match(/OS ([\d_]+)/)?.[1];
+  const [major, minor] = version?.split('_') || [];
+  if (!version || !major) return null;
 
-export function changeMetaThemeColor(color) {
-  const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-  if (metaThemeColor) {
-    metaThemeColor.setAttribute('content', color);
-  }
-}
-
-export function calculateHeaderGroupHeight(header, headerGroup) {
-  if (!headerGroup) return 0;
-  
-  let totalHeight = 0;
-  const children = headerGroup.children;
-  
-  for (const child of children) {
-    if (child.style.display !== 'none') {
-      totalHeight += child.offsetHeight;
-    }
-  }
-  
-  return totalHeight;
-}
-
-// Fetch config utility
-export function fetchConfig(type, options = {}) {
-  const config = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': `application/${type}`,
-      ...options.headers
-    },
-    ...options
+  return {
+    fullString: version.replace('_', '.'),
+    major: parseInt(major, 10),
+    minor: minor ? parseInt(minor, 10) : 0,
   };
-  
-  return config;
 }
 
-// Start view transition
-export function startViewTransition(callback) {
-  if (document.startViewTransition) {
-    return document.startViewTransition(callback);
+/**
+ * Determines which grid items should be animated during a transition.
+ * It makes an estimation based on the zoom-out card size because it's
+ * the common denominator for both transition states. I.e. transitioning either
+ * from 10 to 20 cards the other way around, both need 20 cards to be animated.
+ * @param {Element} grid - The grid element
+ * @param {Element[]} cards - The cards to animate
+ * @returns {number} - Number of cards that should be animated
+ */
+function getCardsToAnimate(grid, cards) {
+  if (!grid || !cards || cards.length === 0) return 0;
+
+  const itemSample = cards[0];
+  if (!itemSample) return 0;
+
+  // Calculate the visible area of the grid for the Y axis. Assume X is always fully visible:
+  const gridRect = grid.getBoundingClientRect();
+  const visibleArea = {
+    top: Math.max(0, gridRect.top),
+    bottom: Math.min(window.innerHeight, gridRect.bottom),
+  };
+
+  const visibleHeight = Math.round(visibleArea.bottom - visibleArea.top);
+  if (visibleHeight <= 0) return 0;
+
+  /** @type {import('product-card').ProductCard | null} */
+  const cardSample = itemSample.querySelector('product-card');
+  const gridStyle = getComputedStyle(grid);
+
+  const galleryAspectRatio = cardSample?.refs?.cardGallery?.style.getPropertyValue('--gallery-aspect-ratio') || '';
+  let aspectRatio = parseFloat(galleryAspectRatio) || 0.5;
+  if (galleryAspectRatio?.includes('/')) {
+    const [width = '1', height = '2'] = galleryAspectRatio.split('/');
+    aspectRatio = parseInt(width, 10) / parseInt(height, 10);
   }
-  return Promise.resolve().then(callback);
+
+  const cardGap = parseInt(cardSample?.refs?.productCardLink?.style.getPropertyValue('--product-card-gap') || '') || 12;
+  const gridGap = parseInt(gridStyle.getPropertyValue('--product-grid-gap')) || 12;
+
+  // Assume only a couple of lines of text in the card details (title and price).
+  // If the title wraps into more lines, we might just animate more cards, but that's fine.
+  const detailsSize = ((parseInt(gridStyle.fontSize) || 16) + 2) * 2;
+
+  const isMobile = window.innerWidth < 750;
+
+  // Always use the zoom-out state card width
+  const cardWidth = isMobile ? Math.round((gridRect.width - gridGap) / 2) : 100;
+  const cardHeight = Math.round(cardWidth / aspectRatio) + cardGap + detailsSize;
+
+  // Calculate the number of cards that fit in the visible area:
+  // - The width estimation is pretty accurate, we can ignore decimals.
+  // - The height estimation needs to account for peeking rows, so we round up.
+  const columnsInGrid = isMobile ? 2 : Math.floor((gridRect.width + gridGap) / (cardWidth + gridGap));
+  const rowsInGrid = Math.ceil((visibleHeight - gridGap) / (cardHeight + gridGap));
+
+  return columnsInGrid * rowsInGrid;
 }
 
-// Export for use in other modules
-window.isMobileBreakpoint = isMobileBreakpoint;
-window.mediaQueryLarge = mediaQueryLarge;
-window.debounce = debounce;
-window.throttle = throttle;
-window.requestIdleCallback = requestIdleCallback;
-window.viewTransition = viewTransition;
-window.scheduler = scheduler;
-window.clamp = clamp;
-window.center = center;
-window.closest = closest;
-window.getVisibleElements = getVisibleElements;
-window.preventDefault = preventDefault;
-window.isClickedOutside = isClickedOutside;
-window.onAnimationEnd = onAnimationEnd;
-window.prefersReducedMotion = prefersReducedMotion;
-window.resetShimmer = resetShimmer;
-window.formatMoney = formatMoney;
-window.touchToPoint = touchToPoint;
-window.getDistance = getDistance;
-window.getMidpoint = getMidpoint;
-window.trapFocus = trapFocus;
-window.removeTrapFocus = removeTrapFocus;
-window.cycleFocus = cycleFocus;
-window.onDocumentLoaded = onDocumentLoaded;
-window.changeMetaThemeColor = changeMetaThemeColor;
-window.calculateHeaderGroupHeight = calculateHeaderGroupHeight;
-window.fetchConfig = fetchConfig;
-window.startViewTransition = startViewTransition;
+/**
+ * Preloads an image
+ * @param {string} src - The source of the image to preload
+ */
+export function preloadImage(src) {
+  const image = new Image();
+  image.src = src;
+}
+
+export class TextComponent extends HTMLElement {
+  shimmer() {
+    this.setAttribute('shimmer', '');
+  }
+}
+
+if (!customElements.get('text-component')) {
+  customElements.define('text-component', TextComponent);
+}
+
+/**
+ * Resets the shimmer attribute on all elements in the container.
+ * @param {Element} [container] - The container to reset the shimmer attribute on.
+ */
+export function resetShimmer(container = document.body) {
+  const shimmer = container.querySelectorAll('[shimmer]');
+  shimmer.forEach((item) => item.removeAttribute('shimmer'));
+}
+
+/**
+ * Change the meta theme color of the header.
+ * @param {Element} colorSourceElement - The HTML element whose background-color will determine the new theme-color.
+ */
+export function changeMetaThemeColor(colorSourceElement) {
+  const metaThemeColor = document.head.querySelector('meta[name="theme-color"]');
+  const containerStyle = window.getComputedStyle(colorSourceElement);
+  if (metaThemeColor) metaThemeColor.setAttribute('content', containerStyle.backgroundColor);
+}
+
+class Scheduler {
+  /** @type {Set<() => void>} */
+  #queue = new Set();
+  /** @type {boolean} */
+  #scheduled = false;
+
+  /** @param {() => void} task */
+  schedule = async (task) => {
+    this.#queue.add(task);
+
+    if (!this.#scheduled) {
+      this.#scheduled = true;
+
+      // Wait for any in-progress view transitions to finish
+      if (viewTransition.current) await viewTransition.current;
+
+      requestAnimationFrame(this.flush);
+    }
+  };
+
+  flush = () => {
+    for (const task of this.#queue) {
+      task();
+    }
+
+    this.#queue.clear();
+    this.#scheduled = false;
+  };
+}
+
+export const scheduler = new Scheduler();
+
+Theme.utilities = {
+  ...Theme.utilities,
+  scheduler: scheduler,
+};
