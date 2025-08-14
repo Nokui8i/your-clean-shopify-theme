@@ -27,7 +27,7 @@
       "type": "main-cart",
       "blocks": {
         "cart_items": {
-          "type": "cart-items",
+          "type": "_cart-products",
           "settings": {
             "show_vendor": false,
             "show_quantity_selector": true,
@@ -36,7 +36,7 @@
           }
         },
         "cart_summary": {
-          "type": "cart-summary",
+          "type": "_cart-summary",
           "settings": {
             "show_cart_note": true,
             "show_tax_info": true,

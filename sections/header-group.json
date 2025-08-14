@@ -15,7 +15,7 @@
       "type": "section",
       "blocks": {
         "logo": {
-          "type": "header-logo",
+          "type": "_header-logo",
           "static": true,
           "settings": {
             "hide_logo_on_home_page": false,
@@ -40,7 +40,7 @@
       }
     },
     "header_menu": {
-      "type": "header-menu",
+      "type": "_header-menu",
       "static": true,
       "settings": {
         "menu": "main-menu",
@@ -66,28 +66,10 @@
         "drawer_dividers": false
       },
       "blocks": {}
-    },
-    "header_actions": {
-      "type": "header-actions",
-      "static": true,
-      "settings": {
-        "show_search": true,
-        "search_position": "right",
-        "search_row": "top",
-        "show_country": true,
-        "country_selector_style": false,
-        "show_language": true,
-        "localization_font": "heading",
-        "localization_font_size": "1rem",
-        "localization_position": "right",
-        "localization_row": "top"
-      },
-      "blocks": {}
     }
   },
   "order": [
     "header_logo",
-    "header_menu",
-    "header_actions"
+    "header_menu"
   ]
 }
