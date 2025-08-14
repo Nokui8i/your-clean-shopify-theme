@@ -1,25 +1,5 @@
 {
   "sections": {
-    "announcement_bar": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_1": {
-          "type": "_announcement",
-          "settings": {
-            "text": "LIMITED OFFER ! 20% OFF",
-            "link": ""
-          }
-        }
-      },
-      "block_order": ["announcement_1"],
-      "settings": {
-        "color_scheme": "scheme-4",
-        "section_width": "full-width",
-        "divider_width": 0,
-        "padding-block-start": 0,
-        "padding-block-end": 0
-      }
-    },
     "hero_section": {
       "type": "hero",
       "blocks": {
@@ -226,7 +206,6 @@
     }
   },
   "order": [
-    "announcement_bar",
     "hero_section",
     "hot_products",
     "collections_section",
