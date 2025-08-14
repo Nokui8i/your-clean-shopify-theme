@@ -26,26 +26,17 @@
     "cart_content": {
       "type": "main-cart",
       "blocks": {
-        "cart_items": {
-          "type": "_cart-products",
+        "cart_page_title": {
+          "type": "_cart-title",
           "settings": {
             "show_vendor": false,
             "show_quantity_selector": true,
             "show_remove_button": true,
             "color_scheme": "scheme-1"
           }
-        },
-        "cart_summary": {
-          "type": "_cart-summary",
-          "settings": {
-            "show_cart_note": true,
-            "show_tax_info": true,
-            "show_shipping_calculator": false,
-            "color_scheme": "scheme-2"
-          }
         }
       },
-      "block_order": ["cart_items", "cart_summary"],
+      "block_order": ["cart_page_title"],
       "settings": {
         "content_direction": "row",
         "vertical_on_mobile": true,

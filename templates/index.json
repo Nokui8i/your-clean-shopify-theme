@@ -4,24 +4,13 @@
       "type": "product-list",
       "blocks": {
         "product_header": {
-          "type": "_product-list-content",
+          "type": "text",
           "settings": {
-            "content_direction": "column",
-            "horizontal_alignment": "center",
-            "gap": 16
-          },
-          "blocks": {
-            "title": {
-              "type": "text",
-              "settings": {
-                "text": "<h2>HOT NOW</h2>",
-                "alignment": "center",
-                "type_preset": "h2",
-                "case": "uppercase"
-              }
-            }
-          },
-          "block_order": ["title"]
+            "text": "<h2>HOT NOW</h2>",
+            "alignment": "center",
+            "type_preset": "h2",
+            "case": "uppercase"
+          }
         }
       },
       "block_order": ["product_header"],
@@ -80,24 +69,13 @@
       "type": "product-list",
       "blocks": {
         "product_header": {
-          "type": "_product-list-content",
+          "type": "text",
           "settings": {
-            "content_direction": "column",
-            "horizontal_alignment": "center",
-            "gap": 16
-          },
-          "blocks": {
-            "title": {
-              "type": "text",
-              "settings": {
-                "text": "<h2>BEST SELLERS</h2>",
-                "alignment": "center",
-                "type_preset": "h2",
-                "case": "uppercase"
-              }
-            }
-          },
-          "block_order": ["title"]
+            "text": "<h2>BEST SELLERS</h2>",
+            "alignment": "center",
+            "type_preset": "h2",
+            "case": "uppercase"
+          }
         }
       },
       "block_order": ["product_header"],

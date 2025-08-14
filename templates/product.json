@@ -1,7 +1,7 @@
 {
   "sections": {
     "product_media": {
-      "type": "_product-media-gallery",
+      "type": "featured-product",
       "settings": {
         "image_ratio": "square",
         "enable_zoom": true,
