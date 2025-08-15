@@ -1,0 +1,576 @@
+{% comment %}
+  Bestsellers Carousel Section for Castle Theme
+  Features: Product carousel, navigation arrows, responsive design
+{% endcomment %}
+
+<div class="bestsellers-carousel-section" data-bestsellers-carousel>
+  <div class="bestsellers-container page-width">
+    
+    <!-- Section Header -->
+    <div class="bestsellers-header">
+      <h2 class="bestsellers-title">{{ section.settings.section_title }}</h2>
+      {% if section.settings.section_subtitle != blank %}
+        <p class="bestsellers-subtitle">{{ section.settings.section_subtitle }}</p>
+      {% endif %}
+    </div>
+    
+    <!-- Carousel Container -->
+    <div class="carousel-container">
+      <div class="carousel-track" data-carousel-track>
+        {% for product in collections[section.settings.collection].products limit: section.settings.max_products %}
+          <div class="carousel-item" data-carousel-item>
+            <div class="product-card">
+              <a href="{{ product.url }}" class="product-card__link">
+                <div class="product-card__image">
+                  {% if product.featured_image %}
+                    <img 
+                      src="{{ product.featured_image | image_url: width: 300, height: 400, crop: 'center' }}"
+                      alt="{{ product.title }}"
+                      class="product-card__img"
+                      loading="lazy"
+                    >
+                  {% else %}
+                    <div class="product-card__placeholder">
+                      <span class="product-card__placeholder-text">{{ product.title | first }}</span>
+                    </div>
+                  {% endif %}
+                  
+                  <!-- Product Badges -->
+                  {% if product.available == false %}
+                    <span class="product-badge product-badge--sold-out">Sold Out</span>
+                  {% elsif product.compare_at_price > product.price %}
+                    <span class="product-badge product-badge--sale">Sale</span>
+                  {% elsif product.tags contains 'new' %}
+                    <span class="product-badge product-badge--new">New</span>
+                  {% endif %}
+                </div>
+                
+                <div class="product-card__content">
+                  <h3 class="product-card__title">{{ product.title }}</h3>
+                  <div class="product-card__price">
+                    {% if product.compare_at_price > product.price %}
+                      <span class="price__sale">{{ product.price | money }}</span>
+                      <span class="price__regular">{{ product.compare_at_price | money }}</span>
+                    {% else %}
+                      <span class="price__regular">{{ product.price | money }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </a>
+              
+              <!-- Quick Add Button -->
+              {% if section.settings.enable_quick_add and product.available %}
+                <button class="product-card__quick-add" data-quick-add="{{ product.id }}">
+                  Quick Add
+                </button>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Navigation Arrows -->
+      <button class="carousel-arrow carousel-arrow--prev" data-carousel-prev>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="carousel-arrow carousel-arrow--next" data-carousel-next>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+    
+    <!-- View All Button -->
+    {% if section.settings.show_view_all %}
+      <div class="bestsellers-footer">
+        <a href="{{ collections[section.settings.collection].url }}" class="bestsellers-view-all button--primary">
+          {{ section.settings.view_all_text }}
+        </a>
+      </div>
+    {% endif %}
+    
+  </div>
+</div>
+
+<style>
+  .bestsellers-carousel-section {
+    padding: 4rem 0;
+    background: var(--castle-background);
+  }
+
+  .bestsellers-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .bestsellers-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .bestsellers-title {
+    font-family: var(--castle-font-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0 0 1rem 0;
+    color: var(--castle-primary);
+  }
+
+  .bestsellers-subtitle {
+    font-family: var(--castle-font-secondary);
+    font-size: 1.125rem;
+    color: var(--castle-text-light);
+    margin: 0;
+  }
+
+  .carousel-container {
+    position: relative;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 2rem;
+    transition: transform 0.5s ease;
+    overflow: hidden;
+  }
+
+  .carousel-item {
+    flex: 0 0 calc(100% / {{ section.settings.columns_desktop }} - 1.5rem);
+    min-width: 0;
+  }
+
+  .product-card {
+    background: var(--castle-background);
+    border: 1px solid var(--castle-border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--castle-shadow-lg);
+    border-color: var(--castle-secondary);
+  }
+
+  .product-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .product-card__image {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  .product-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .product-card:hover .product-card__img {
+    transform: scale(1.05);
+  }
+
+  .product-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--castle-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .product-card__placeholder-text {
+    font-family: var(--castle-font-primary);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--castle-text-light);
+  }
+
+  .product-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-family: var(--castle-font-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    z-index: 10;
+  }
+
+  .product-badge--sale {
+    background: var(--castle-accent);
+    color: white;
+  }
+
+  .product-badge--sold-out {
+    background: var(--castle-text-light);
+    color: white;
+  }
+
+  .product-badge--new {
+    background: var(--castle-secondary);
+    color: white;
+  }
+
+  .product-card__content {
+    padding: 1.5rem;
+  }
+
+  .product-card__title {
+    font-family: var(--castle-font-secondary);
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: var(--castle-primary);
+    line-height: 1.4;
+  }
+
+  .product-card__price {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .price__regular {
+    font-family: var(--castle-font-secondary);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--castle-secondary);
+  }
+
+  .price__sale {
+    font-family: var(--castle-font-secondary);
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--castle-accent);
+  }
+
+  .price__regular.price--sale {
+    text-decoration: line-through;
+    opacity: 0.7;
+    font-size: 1rem;
+  }
+
+  .product-card__quick-add {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    padding: 0.75rem;
+    background: var(--castle-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: var(--castle-font-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .product-card:hover .product-card__quick-add {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .product-card__quick-add:hover {
+    background: var(--castle-secondary);
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    background: var(--castle-background);
+    border: 2px solid var(--castle-border);
+    border-radius: 50%;
+    color: var(--castle-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carousel-arrow:hover {
+    background: var(--castle-primary);
+    color: white;
+    border-color: var(--castle-primary);
+  }
+
+  .carousel-arrow--prev {
+    left: -24px;
+  }
+
+  .carousel-arrow--next {
+    right: -24px;
+  }
+
+  .bestsellers-footer {
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  .bestsellers-view-all {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--castle-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: var(--castle-font-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+  }
+
+  .bestsellers-view-all:hover {
+    background: var(--castle-secondary);
+    transform: translateY(-2px);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .carousel-item {
+      flex: 0 0 calc(100% / {{ section.settings.columns_mobile }} - 1rem);
+    }
+
+    .carousel-track {
+      gap: 1rem;
+    }
+
+    .bestsellers-title {
+      font-size: 2rem;
+    }
+
+    .carousel-arrow {
+      width: 40px;
+      height: 40px;
+    }
+
+    .carousel-arrow--prev {
+      left: -20px;
+    }
+
+    .carousel-arrow--next {
+      right: -20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .carousel-item {
+      flex: 0 0 100%;
+    }
+
+    .bestsellers-title {
+      font-size: 1.75rem;
+    }
+
+    .carousel-arrow {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  class BestsellersCarousel {
+    constructor(element) {
+      this.element = element;
+      this.track = element.querySelector('[data-carousel-track]');
+      this.items = element.querySelectorAll('[data-carousel-item]');
+      this.prevBtn = element.querySelector('[data-carousel-prev]');
+      this.nextBtn = element.querySelector('[data-carousel-next]');
+      this.currentIndex = 0;
+      this.itemWidth = 0;
+      this.visibleItems = 0;
+      
+      this.init();
+    }
+
+    init() {
+      this.calculateDimensions();
+      this.setupEventListeners();
+      this.updateArrows();
+    }
+
+    calculateDimensions() {
+      const container = this.element.querySelector('.carousel-container');
+      const item = this.items[0];
+      
+      if (item) {
+        this.itemWidth = item.offsetWidth + 32; // Including gap
+        this.visibleItems = Math.floor(container.offsetWidth / this.itemWidth);
+      }
+    }
+
+    setupEventListeners() {
+      if (this.prevBtn) {
+        this.prevBtn.addEventListener('click', () => this.prev());
+      }
+      
+      if (this.nextBtn) {
+        this.nextBtn.addEventListener('click', () => this.next());
+      }
+
+      // Handle window resize
+      window.addEventListener('resize', () => {
+        this.calculateDimensions();
+        this.goTo(this.currentIndex);
+      });
+    }
+
+    prev() {
+      this.currentIndex = Math.max(0, this.currentIndex - 1);
+      this.goTo(this.currentIndex);
+    }
+
+    next() {
+      this.currentIndex = Math.min(this.items.length - this.visibleItems, this.currentIndex + 1);
+      this.goTo(this.currentIndex);
+    }
+
+    goTo(index) {
+      this.currentIndex = index;
+      const translateX = -index * this.itemWidth;
+      this.track.style.transform = `translateX(${translateX}px)`;
+      this.updateArrows();
+    }
+
+    updateArrows() {
+      if (this.prevBtn) {
+        this.prevBtn.style.opacity = this.currentIndex === 0 ? '0.5' : '1';
+        this.prevBtn.style.pointerEvents = this.currentIndex === 0 ? 'none' : 'auto';
+      }
+      
+      if (this.nextBtn) {
+        this.nextBtn.style.opacity = this.currentIndex >= this.items.length - this.visibleItems ? '0.5' : '1';
+        this.nextBtn.style.pointerEvents = this.currentIndex >= this.items.length - this.visibleItems ? 'none' : 'auto';
+      }
+    }
+  }
+
+  // Initialize all carousels
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-bestsellers-carousel]').forEach(carousel => {
+      new BestsellersCarousel(carousel);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Bestsellers Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "Our Bestsellers"
+    },
+    {
+      "type": "text",
+      "id": "section_subtitle",
+      "label": "Section Subtitle",
+      "default": "Let your day be filled with what inspires you."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection",
+      "info": "Select the collection to display products from"
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Maximum Products",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop Columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Mobile Columns",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_quick_add",
+      "label": "Enable Quick Add",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "View All Products"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bestsellers Carousel"
+    }
+  ]
+}
+{% endschema %}

@@ -1040,4 +1040,98 @@
   ],
   "presets": []
 }
+
+<style>
+  /* Hero Merge Effect - Header becomes transparent on homepage */
+  .header--transparent {
+    background: transparent !important;
+    border-bottom: none !important;
+    box-shadow: none !important;
+  }
+  
+  .header--transparent .header__logo,
+  .header--transparent .header__menu,
+  .header--transparent .header__search,
+  .header--transparent .header__localization {
+    color: white !important;
+  }
+  
+  .header--transparent .header__menu a {
+    color: white !important;
+  }
+  
+  .header--transparent .header__menu a:hover {
+    color: var(--castle-accent) !important;
+    border-bottom: 2px solid var(--castle-accent) !important;
+  }
+  
+  /* Sticky Header with Background */
+  .header--sticky {
+    background: var(--castle-background) !important;
+    border-bottom: 1px solid var(--castle-border) !important;
+    box-shadow: var(--castle-shadow) !important;
+  }
+  
+  .header--sticky .header__logo,
+  .header--sticky .header__menu,
+  .header--sticky .header__search,
+  .header--sticky .header__localization {
+    color: var(--castle-primary) !important;
+  }
+  
+  .header--sticky .header__menu a {
+    color: var(--castle-primary) !important;
+  }
+  
+  .header--sticky .header__menu a:hover {
+    color: var(--castle-secondary) !important;
+    border-bottom: 2px solid var(--castle-secondary) !important;
+  }
+</style>
+
+<script>
+  // Header Hero Merge Effect
+  class HeaderHeroMerge {
+    constructor() {
+      this.header = document.querySelector('[data-header]');
+      this.hero = document.querySelector('.hero');
+      this.init();
+    }
+    
+    init() {
+      if (!this.header || !this.hero) return;
+      
+      // Check if we're on homepage
+      if (window.location.pathname === '/' || window.location.pathname === '/index') {
+        this.setupHeroMerge();
+      }
+    }
+    
+    setupHeroMerge() {
+      const heroBottom = this.hero.offsetTop + this.hero.offsetHeight;
+      
+      const handleScroll = () => {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop < heroBottom - 100) {
+          // In hero area - make header transparent
+          this.header.classList.add('header--transparent');
+          this.header.classList.remove('header--sticky');
+        } else {
+          // Past hero area - make header sticky with background
+          this.header.classList.remove('header--transparent');
+          this.header.classList.add('header--sticky');
+        }
+      };
+      
+      window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial check
+    }
+  }
+  
+  // Initialize header hero merge
+  document.addEventListener('DOMContentLoaded', () => {
+    new HeaderHeroMerge();
+  });
+</script>
 {% endschema %}

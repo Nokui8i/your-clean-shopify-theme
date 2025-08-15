@@ -114,7 +114,7 @@
         "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
-        "padding-block-start": 80,
+        "padding-block-start": 0,
         "padding-block-end": 80
       }
     },
@@ -174,93 +174,34 @@
         "collection_description_style": "body"
       }
     },
-    "product_list_x9Yaab": {
-      "type": "product-list",
-      "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "static": true,
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 20,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_QBqpVr": {
-              "type": "_product-list-text",
-              "name": "Collection Title",
-              "settings": {
-                "text": "<h3>Our bestsellers</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-secondary--family)",
-                "font_size": "var(--font-size--body-md)",
-                "line_height": "loose",
-                "letter_spacing": "loose",
-                "case": "uppercase",
-                "wrap": "pretty",
-                "color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_QBqpVr"
-          ]
-        }
-      },
-      "name": "Featured collection",
+    "bestsellers_carousel": {
+      "type": "bestsellers-carousel",
+      "name": "Bestsellers Carousel",
       "settings": {
+        "section_title": "Our Bestsellers",
+        "section_subtitle": "Let your day be filled with what inspires you.",
         "collection": "all",
-        "layout_type": "carousel",
-        "carousel_on_mobile": false,
         "max_products": 8,
-        "columns": 5,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 0,
-        "rows_gap": 36,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "center",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "enable_quick_add": true,
+        "show_view_all": true,
+        "view_all_text": "View All Products",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "collections_grid": {
+      "type": "collections-grid",
+      "name": "Collections Grid",
+      "settings": {
+        "section_title": "COLLECTIONS",
+        "max_collections": 8,
+        "columns_desktop": 4,
+        "columns_mobile": 2,
+        "show_product_count": true,
+        "show_view_all": true,
+        "view_all_text": "View All Collections",
+        "color_scheme": "scheme-1"
       }
     },
     "newsletter_popup": {
@@ -303,13 +244,14 @@
     }
   },
   "order": [
-    "announcement_bar",
-    "header",
-    "mega_menu",
-    "hero_irjTFL",
-    "featured_collection",
-    "product_list_x9Yaab",
-    "newsletter_popup",
-    "enhanced_footer"
-  ]
+  "announcement_bar",
+  "header",
+  "mega_menu",
+  "hero_irjTFL",
+  "bestsellers_carousel",
+  "collections_grid",
+  "featured_collection",
+  "newsletter_popup",
+  "enhanced_footer"
+]
 }

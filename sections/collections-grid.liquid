@@ -1,0 +1,305 @@
+{% comment %}
+  Collections Grid Section for Castle Theme
+  Features: Grid layout, collection cards, customizable styling
+{% endcomment %}
+
+<div class="collections-grid-section" data-collections-grid>
+  <div class="collections-container page-width">
+    
+    <!-- Section Header -->
+    {% if section.settings.section_title != blank %}
+      <div class="collections-header">
+        <h2 class="collections-title">{{ section.settings.section_title }}</h2>
+      </div>
+    {% endif %}
+    
+    <!-- Collections Grid -->
+    <div class="collections-grid" style="grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);">
+      {% for collection in collections limit: section.settings.max_collections %}
+        <div class="collection-card" data-collection-card>
+          <a href="{{ collection.url }}" class="collection-card__link">
+            <div class="collection-card__image">
+              {% if collection.image %}
+                <img 
+                  src="{{ collection.image | image_url: width: 400, height: 500, crop: 'center' }}"
+                  alt="{{ collection.title }}"
+                  class="collection-card__img"
+                  loading="lazy"
+                >
+              {% else %}
+                <div class="collection-card__placeholder">
+                  <span class="collection-card__placeholder-text">{{ collection.title | first }}</span>
+                </div>
+              {% endif %}
+              
+              <!-- Collection Overlay -->
+              <div class="collection-card__overlay">
+                <div class="collection-card__content">
+                  <h3 class="collection-card__title">{{ collection.title }}</h3>
+                  {% if section.settings.show_product_count %}
+                    <p class="collection-card__count">{{ collection.products_count }} products</p>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+    
+    <!-- View All Button -->
+    {% if section.settings.show_view_all %}
+      <div class="collections-footer">
+        <a href="{{ routes.collections_url }}" class="collections-view-all button--primary">
+          {{ section.settings.view_all_text }}
+        </a>
+      </div>
+    {% endif %}
+    
+  </div>
+</div>
+
+<style>
+  .collections-grid-section {
+    padding: 4rem 0;
+    background: var(--castle-surface);
+  }
+
+  .collections-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .collections-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .collections-title {
+    font-family: var(--castle-font-primary);
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 0;
+    color: var(--castle-primary);
+  }
+
+  .collections-grid {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .collection-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--castle-background);
+    box-shadow: var(--castle-shadow);
+    transition: all 0.3s ease;
+  }
+
+  .collection-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--castle-shadow-lg);
+  }
+
+  .collection-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .collection-card__image {
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+  }
+
+  .collection-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .collection-card:hover .collection-card__img {
+    transform: scale(1.05);
+  }
+
+  .collection-card__placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--castle-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .collection-card__placeholder-text {
+    font-family: var(--castle-font-primary);
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--castle-text-light);
+  }
+
+  .collection-card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 2rem 1.5rem 1.5rem;
+    color: white;
+  }
+
+  .collection-card__title {
+    font-family: var(--castle-font-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .collection-card__count {
+    font-family: var(--castle-font-secondary);
+    font-size: 0.875rem;
+    margin: 0;
+    opacity: 0.9;
+  }
+
+  .collections-footer {
+    text-align: center;
+  }
+
+  .collections-view-all {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--castle-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-family: var(--castle-font-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+  }
+
+  .collections-view-all:hover {
+    background: var(--castle-secondary);
+    transform: translateY(-2px);
+  }
+
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .collections-grid {
+      grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr) !important;
+      gap: 1.5rem;
+    }
+
+    .collections-title {
+      font-size: 2rem;
+    }
+
+    .collections-grid-section {
+      padding: 3rem 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .collections-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .collections-title {
+      font-size: 1.75rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collections Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Title",
+      "default": "COLLECTIONS"
+    },
+    {
+      "type": "range",
+      "id": "max_collections",
+      "label": "Maximum Collections",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Desktop Columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Mobile Columns",
+      "min": 1,
+      "max": 3,
+      "step": 1,
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show Product Count",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_view_all",
+      "label": "Show View All Button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View All Button Text",
+      "default": "View All Collections"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Collections Grid"
+    }
+  ]
+}
+{% endschema %}
