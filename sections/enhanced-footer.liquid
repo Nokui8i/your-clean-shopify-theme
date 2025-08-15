@@ -1,0 +1,262 @@
+{% comment %}
+  Enhanced Footer Section for Castle Theme
+  Features: Multi-column layout, social media, newsletter, store locator
+{% endcomment %}
+
+<footer class="enhanced-footer" data-enhanced-footer>
+  <div class="enhanced-footer__container page-width">
+    
+    <!-- Main Footer Content -->
+    <div class="enhanced-footer__main">
+      <div class="enhanced-footer__grid">
+        
+        <!-- Company Info -->
+        <div class="enhanced-footer__column">
+          <div class="enhanced-footer__logo">
+            {% if section.settings.logo != blank %}
+              <img 
+                src="{{ section.settings.logo | image_url: width: 200, height: 60, crop: 'center' }}"
+                alt="{{ shop.name }}"
+                class="footer-logo"
+                loading="lazy"
+              >
+            {% else %}
+              <h2 class="footer-brand">{{ shop.name }}</h2>
+            {% endif %}
+          </div>
+          
+          {% if section.settings.company_description != blank %}
+            <p class="enhanced-footer__description">{{ section.settings.company_description }}</p>
+          {% endif %}
+          
+          <!-- Social Media -->
+          {% if section.settings.show_social_media %}
+            <div class="enhanced-footer__social">
+              {% if settings.social_facebook_link != blank %}
+                <a href="{{ settings.social_facebook_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-facebook' %}
+                </a>
+              {% endif %}
+              
+              {% if settings.social_instagram_link != blank %}
+                <a href="{{ settings.social_instagram_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-instagram' %}
+                </a>
+              {% endif %}
+              
+              {% if settings.social_twitter_link != blank %}
+                <a href="{{ settings.social_twitter_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-twitter' %}
+                </a>
+              {% endif %}
+              
+              {% if settings.social_youtube_link != blank %}
+                <a href="{{ settings.social_youtube_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-youtube' %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+        </div>
+        
+        <!-- Quick Links -->
+        <div class="enhanced-footer__column">
+          <h3 class="enhanced-footer__title">{{ section.settings.quick_links_title | default: 'Quick Links' }}</h3>
+          {% if section.settings.quick_links_menu != blank %}
+            <ul class="enhanced-footer__menu">
+              {% for link in section.settings.quick_links_menu.links %}
+                <li>
+                  <a href="{{ link.url }}" class="enhanced-footer__link">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        
+        <!-- Customer Service -->
+        <div class="enhanced-footer__column">
+          <h3 class="enhanced-footer__title">{{ section.settings.customer_service_title | default: 'Customer Service' }}</h3>
+          {% if section.settings.customer_service_menu != blank %}
+            <ul class="enhanced-footer__menu">
+              {% for link in section.settings.customer_service_menu.links %}
+                <li>
+                  <a href="{{ link.url }}" class="enhanced-footer__link">{{ link.title }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+        
+        <!-- Newsletter -->
+        {% if section.settings.show_newsletter %}
+          <div class="enhanced-footer__column">
+            <h3 class="enhanced-footer__title">{{ section.settings.newsletter_title | default: 'Newsletter' }}</h3>
+            <p class="enhanced-footer__newsletter-text">{{ section.settings.newsletter_text | default: 'Subscribe for updates and exclusive offers' }}</p>
+            
+            <div class="enhanced-footer__newsletter">
+              {% form 'customer', class: 'newsletter-form' %}
+                <input type="hidden" name="contact[tags]" value="newsletter">
+                <div class="newsletter-input-group">
+                  <input 
+                    type="email" 
+                    name="contact[email]" 
+                    placeholder="{{ section.settings.newsletter_placeholder | default: 'Enter your email' }}"
+                    class="newsletter-input"
+                    required
+                  >
+                  <button type="submit" class="newsletter-submit">
+                    {% render 'icon-arrow' %}
+                  </button>
+                </div>
+              {% endform %}
+            </div>
+          </div>
+        {% endif %}
+        
+      </div>
+    </div>
+    
+    <!-- Footer Bottom -->
+    <div class="enhanced-footer__bottom">
+      <div class="enhanced-footer__bottom-content">
+        
+        <!-- Copyright -->
+        <div class="enhanced-footer__copyright">
+          <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. {{ section.settings.copyright_text | default: 'All rights reserved.' }}</p>
+        </div>
+        
+        <!-- Payment Methods -->
+        {% if section.settings.show_payment_methods %}
+          <div class="enhanced-footer__payment">
+            {% for type in shop.enabled_payment_types %}
+              {{ type | payment_type_svg_tag: class: 'payment-icon' }}
+            {% endfor %}
+          </div>
+        {% endif %}
+        
+        <!-- Additional Links -->
+        {% if section.settings.additional_links_menu != blank %}
+          <div class="enhanced-footer__additional-links">
+            {% for link in section.settings.additional_links_menu.links %}
+              <a href="{{ link.url }}" class="enhanced-footer__additional-link">{{ link.title }}</a>
+            {% endfor %}
+          </div>
+        {% endif %}
+        
+      </div>
+    </div>
+    
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Enhanced Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer Logo"
+    },
+    {
+      "type": "textarea",
+      "id": "company_description",
+      "label": "Company Description"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_media",
+      "label": "Show Social Media",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "quick_links_title",
+      "label": "Quick Links Title",
+      "default": "Quick Links"
+    },
+    {
+      "type": "link_list",
+      "id": "quick_links_menu",
+      "label": "Quick Links Menu"
+    },
+    {
+      "type": "text",
+      "id": "customer_service_title",
+      "label": "Customer Service Title",
+      "default": "Customer Service"
+    },
+    {
+      "type": "link_list",
+      "id": "customer_service_menu",
+      "label": "Customer Service Menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_newsletter",
+      "label": "Show Newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_title",
+      "label": "Newsletter Title",
+      "default": "Newsletter"
+    },
+    {
+      "type": "textarea",
+      "id": "newsletter_text",
+      "label": "Newsletter Text",
+      "default": "Subscribe for updates and exclusive offers"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_placeholder",
+      "label": "Newsletter Placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright Text",
+      "default": "All rights reserved."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_methods",
+      "label": "Show Payment Methods",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "additional_links_menu",
+      "label": "Additional Links Menu"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Enhanced Footer"
+    }
+  ]
+}
+{% endschema %}

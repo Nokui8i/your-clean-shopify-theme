@@ -1,0 +1,205 @@
+{% comment %}
+  Newsletter Popup Section for Castle Theme
+  Features: Email signup, promotional content, customizable timing
+{% endcomment %}
+
+<div class="newsletter-popup" data-newsletter-popup>
+  <div class="newsletter-popup-overlay" data-newsletter-popup-close></div>
+  <div class="newsletter-popup-content">
+    <button class="newsletter-popup-close" data-newsletter-popup-close>
+      {% render 'icon-close' %}
+    </button>
+    
+    <div class="newsletter-popup-body">
+      <div class="newsletter-popup-grid">
+        
+        <!-- Image Side -->
+        {% if section.settings.popup_image != blank %}
+          <div class="newsletter-popup-image">
+            <img 
+              src="{{ section.settings.popup_image | image_url: width: 400, height: 500, crop: 'center' }}"
+              alt="{{ section.settings.popup_title }}"
+              class="newsletter-popup-img"
+              loading="lazy"
+            >
+          </div>
+        {% endif %}
+        
+        <!-- Content Side -->
+        <div class="newsletter-popup-content-side">
+          
+          <!-- Popup Title -->
+          {% if section.settings.popup_title != blank %}
+            <h2 class="newsletter-popup-title">{{ section.settings.popup_title }}</h2>
+          {% endif %}
+          
+          <!-- Popup Subtitle -->
+          {% if section.settings.popup_subtitle != blank %}
+            <p class="newsletter-popup-subtitle">{{ section.settings.popup_subtitle }}</p>
+          {% endif %}
+          
+          <!-- Newsletter Form -->
+          <div class="newsletter-popup-form">
+            {% form 'customer', class: 'newsletter-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              
+              <div class="form-group">
+                <input 
+                  type="email" 
+                  name="contact[email]" 
+                  placeholder="{{ section.settings.email_placeholder | default: 'Enter your email' }}"
+                  class="newsletter-input"
+                  required
+                >
+                <button type="submit" class="newsletter-submit button--primary">
+                  {{ section.settings.submit_text | default: 'Subscribe' }}
+                </button>
+              </div>
+              
+              <!-- Success Message -->
+              {% if form.posted_successfully? %}
+                <div class="newsletter-success">
+                  {{ section.settings.success_message | default: 'Thank you for subscribing!' }}
+                </div>
+              {% endif %}
+              
+              <!-- Error Message -->
+              {% if form.errors %}
+                <div class="newsletter-error">
+                  {{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}
+                </div>
+              {% endif %}
+            {% endform %}
+          </div>
+          
+          <!-- Additional Content -->
+          {% if section.settings.additional_content != blank %}
+            <div class="newsletter-popup-additional">
+              {{ section.settings.additional_content }}
+            </div>
+          {% endif %}
+          
+          <!-- Social Media -->
+          {% if section.settings.show_social_media %}
+            <div class="newsletter-popup-social">
+              {% if settings.social_facebook_link != blank %}
+                <a href="{{ settings.social_facebook_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-facebook' %}
+                </a>
+              {% endif %}
+              
+              {% if settings.social_instagram_link != blank %}
+                <a href="{{ settings.social_instagram_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-instagram' %}
+                </a>
+              {% endif %}
+              
+              {% if settings.social_twitter_link != blank %}
+                <a href="{{ settings.social_twitter_link }}" class="social-link" target="_blank" rel="noopener">
+                  {% render 'icon-twitter' %}
+                </a>
+              {% endif %}
+            </div>
+          {% endif %}
+          
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Newsletter Popup",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_popup",
+      "label": "Enable Newsletter Popup",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "popup_image",
+      "label": "Popup Image"
+    },
+    {
+      "type": "text",
+      "id": "popup_title",
+      "label": "Popup Title",
+      "default": "Stay in the Loop"
+    },
+    {
+      "type": "textarea",
+      "id": "popup_subtitle",
+      "label": "Popup Subtitle",
+      "default": "Subscribe to our newsletter for exclusive offers and updates"
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "submit_text",
+      "label": "Submit Button Text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success Message",
+      "default": "Thank you for subscribing!"
+    },
+    {
+      "type": "richtext",
+      "id": "additional_content",
+      "label": "Additional Content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social_media",
+      "label": "Show Social Media Links",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "popup_delay",
+      "label": "Popup Delay (seconds)",
+      "min": 0,
+      "max": 60,
+      "step": 5,
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Popup"
+    }
+  ]
+}
+{% endschema %}

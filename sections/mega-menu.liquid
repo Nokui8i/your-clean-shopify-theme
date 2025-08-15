@@ -1,0 +1,161 @@
+{% comment %}
+  Mega Menu Section for Castle Theme
+  Features: Multi-level navigation, featured collections, product highlights
+{% endcomment %}
+
+<div class="mega-menu" data-mega-menu>
+  <div class="mega-menu__container page-width">
+    <div class="mega-menu__grid">
+      
+      <!-- Main Navigation -->
+      <div class="mega-menu__nav">
+        {% for link in section.settings.menu.links %}
+          <div class="mega-menu__item" data-mega-menu-item>
+            <a href="{{ link.url }}" class="mega-menu__link">
+              {{ link.title }}
+              {% if link.links.size > 0 %}
+                <span class="mega-menu__arrow">{% render 'icon-arrow' %}</span>
+              {% endif %}
+            </a>
+            
+            {% if link.links.size > 0 %}
+              <div class="mega-menu__submenu">
+                <div class="mega-menu__submenu-content">
+                  {% for child_link in link.links %}
+                    <div class="mega-menu__submenu-item">
+                      <a href="{{ child_link.url }}" class="mega-menu__submenu-link">
+                        {{ child_link.title }}
+                      </a>
+                      
+                      {% if child_link.links.size > 0 %}
+                        <ul class="mega-menu__submenu-list">
+                          {% for grandchild_link in child_link.links %}
+                            <li>
+                              <a href="{{ grandchild_link.url }}" class="mega-menu__submenu-link">
+                                {{ grandchild_link.title }}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Featured Collection -->
+      {% if section.settings.featured_collection != blank %}
+        <div class="mega-menu__featured">
+          <h3 class="mega-menu__featured-title">{{ section.settings.featured_collection.title }}</h3>
+          <div class="mega-menu__featured-products">
+            {% for product in section.settings.featured_collection.products limit: 3 %}
+              <div class="mega-menu__product">
+                <a href="{{ product.url }}" class="mega-menu__product-link">
+                  <img 
+                    src="{{ product.featured_image | image_url: width: 100, height: 100, crop: 'center' }}"
+                    alt="{{ product.title }}"
+                    class="mega-menu__product-image"
+                    loading="lazy"
+                  >
+                  <div class="mega-menu__product-info">
+                    <h4 class="mega-menu__product-title">{{ product.title }}</h4>
+                    <p class="mega-menu__product-price">{{ product.price | money }}</p>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+      
+      <!-- Promotional Content -->
+      {% if section.settings.promo_image != blank %}
+        <div class="mega-menu__promo">
+          <a href="{{ section.settings.promo_link | default: '#' }}" class="mega-menu__promo-link">
+            <img 
+              src="{{ section.settings.promo_image | image_url: width: 300, height: 200, crop: 'center' }}"
+              alt="{{ section.settings.promo_title }}"
+              class="mega-menu__promo-image"
+              loading="lazy"
+            >
+            <div class="mega-menu__promo-content">
+              <h3 class="mega-menu__promo-title">{{ section.settings.promo_title }}</h3>
+              <p class="mega-menu__promo-text">{{ section.settings.promo_text }}</p>
+            </div>
+          </a>
+        </div>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Mega Menu",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "collection",
+      "id": "featured_collection",
+      "label": "Featured Collection"
+    },
+    {
+      "type": "image_picker",
+      "id": "promo_image",
+      "label": "Promotional Image"
+    },
+    {
+      "type": "text",
+      "id": "promo_title",
+      "label": "Promotional Title",
+      "default": "Special Offer"
+    },
+    {
+      "type": "textarea",
+      "id": "promo_text",
+      "label": "Promotional Text",
+      "default": "Limited time offer on selected items"
+    },
+    {
+      "type": "url",
+      "id": "promo_link",
+      "label": "Promotional Link"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mega Menu"
+    }
+  ]
+}
+{% endschema %}

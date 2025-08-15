@@ -1,0 +1,115 @@
+{% comment %}
+  Product Quick View Section for Castle Theme
+  Features: Modal popup, product details, add to cart, variant selection
+{% endcomment %}
+
+<div class="quick-view-modal" data-quick-view-modal>
+  <div class="quick-view-overlay" data-quick-view-close></div>
+  <div class="quick-view-content">
+    <button class="quick-view-close" data-quick-view-close>
+      {% render 'icon-close' %}
+    </button>
+    
+    <div class="quick-view-body">
+      <div class="quick-view-grid">
+        
+        <!-- Product Images -->
+        <div class="quick-view-images">
+          <div class="quick-view-main-image">
+            <img 
+              src=""
+              alt=""
+              class="quick-view-image"
+              data-quick-view-main-image
+            >
+          </div>
+          <div class="quick-view-thumbnails" data-quick-view-thumbnails>
+            <!-- Thumbnails will be populated by JavaScript -->
+          </div>
+        </div>
+        
+        <!-- Product Details -->
+        <div class="quick-view-details">
+          <h2 class="quick-view-title" data-quick-view-title></h2>
+          <div class="quick-view-price" data-quick-view-price></div>
+          
+          <!-- Variant Selector -->
+          <div class="quick-view-variants" data-quick-view-variants>
+            <!-- Variants will be populated by JavaScript -->
+          </div>
+          
+          <!-- Quantity Selector -->
+          <div class="quick-view-quantity">
+            <label for="quick-view-quantity">Quantity:</label>
+            <div class="quantity-selector">
+              <button class="quantity-btn" data-quick-view-quantity-minus>-</button>
+              <input 
+                type="number" 
+                id="quick-view-quantity" 
+                value="1" 
+                min="1" 
+                data-quick-view-quantity
+              >
+              <button class="quantity-btn" data-quick-view-quantity-plus>+</button>
+            </div>
+          </div>
+          
+          <!-- Add to Cart -->
+          <button class="quick-view-add-to-cart button--primary" data-quick-view-add-to-cart>
+            Add to Cart
+          </button>
+          
+          <!-- Product Description -->
+          <div class="quick-view-description" data-quick-view-description></div>
+          
+          <!-- Product Meta -->
+          <div class="quick-view-meta">
+            <p class="quick-view-sku" data-quick-view-sku></p>
+            <p class="quick-view-availability" data-quick-view-availability></p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Quick View",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_quick_view",
+      "label": "Enable Quick View",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Quick View"
+    }
+  ]
+}
+{% endschema %}
