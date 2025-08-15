@@ -1,0 +1,458 @@
+/* King Theme - Castle Preset Transformation */
+:root {
+  /* Castle Color Palette */
+  --castle-primary: #2c2c2c;
+  --castle-secondary: #8b7355;
+  --castle-accent: #d4af37;
+  --castle-background: #ffffff;
+  --castle-surface: #f8f8f8;
+  --castle-text: #2c2c2c;
+  --castle-text-light: #6b6b6b;
+  --castle-border: #e5e5e5;
+  --castle-shadow: rgba(44, 44, 44, 0.1);
+  
+  /* Castle Typography */
+  --castle-font-primary: 'Playfair Display', serif;
+  --castle-font-secondary: 'Inter', sans-serif;
+  --castle-font-accent: 'Cormorant Garamond', serif;
+  
+  /* Castle Spacing */
+  --castle-spacing-xs: 0.5rem;
+  --castle-spacing-sm: 1rem;
+  --castle-spacing-md: 1.5rem;
+  --castle-spacing-lg: 2rem;
+  --castle-spacing-xl: 3rem;
+  --castle-spacing-2xl: 4rem;
+  
+  /* Castle Borders */
+  --castle-border-radius: 0;
+  --castle-border-width: 1px;
+  
+  /* Castle Shadows */
+  --castle-shadow-sm: 0 1px 3px var(--castle-shadow);
+  --castle-shadow-md: 0 4px 6px var(--castle-shadow);
+  --castle-shadow-lg: 0 10px 15px var(--castle-shadow);
+}
+
+/* Global Castle Styling */
+body {
+  font-family: var(--castle-font-secondary);
+  color: var(--castle-text);
+  background-color: var(--castle-background);
+  line-height: 1.6;
+}
+
+/* Castle Header Styling */
+.header {
+  background: var(--castle-background);
+  border-bottom: var(--castle-border-width) solid var(--castle-border);
+  box-shadow: var(--castle-shadow-sm);
+}
+
+.header__logo {
+  font-family: var(--castle-font-primary);
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--castle-primary);
+}
+
+.header__nav-link {
+  font-family: var(--castle-font-secondary);
+  font-weight: 500;
+  color: var(--castle-text);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1rem 1.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.header__nav-link:hover {
+  color: var(--castle-secondary);
+}
+
+.header__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--castle-secondary);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.header__nav-link:hover::after {
+  width: 100%;
+}
+
+/* Castle Hero Section */
+.hero {
+  background: linear-gradient(135deg, var(--castle-surface) 0%, var(--castle-background) 100%);
+  padding: var(--castle-spacing-2xl) 0;
+}
+
+.hero__title {
+  font-family: var(--castle-font-primary);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--castle-primary);
+  text-align: center;
+  margin-bottom: var(--castle-spacing-lg);
+  line-height: 1.2;
+}
+
+.hero__subtitle {
+  font-family: var(--castle-font-secondary);
+  font-size: 1.25rem;
+  color: var(--castle-text-light);
+  text-align: center;
+  margin-bottom: var(--castle-spacing-xl);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero__button {
+  background: var(--castle-primary);
+  color: var(--castle-background);
+  border: 2px solid var(--castle-primary);
+  padding: 1rem 2rem;
+  font-family: var(--castle-font-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.hero__button:hover {
+  background: transparent;
+  color: var(--castle-primary);
+}
+
+/* Castle Product Cards */
+.product-card {
+  background: var(--castle-background);
+  border: var(--castle-border-width) solid var(--castle-border);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--castle-shadow-lg);
+  border-color: var(--castle-secondary);
+}
+
+.product-card__image {
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card__image img {
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-card__image img {
+  transform: scale(1.05);
+}
+
+.product-card__info {
+  padding: var(--castle-spacing-md);
+}
+
+.product-card__title {
+  font-family: var(--castle-font-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--castle-primary);
+  margin-bottom: var(--castle-spacing-sm);
+  text-align: center;
+}
+
+.product-card__price {
+  font-family: var(--castle-font-secondary);
+  font-size: 1rem;
+  color: var(--castle-secondary);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Castle Collection Cards */
+.collection-card {
+  background: var(--castle-background);
+  border: var(--castle-border-width) solid var(--castle-border);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.collection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--castle-shadow-lg);
+  border-color: var(--castle-secondary);
+}
+
+.collection-card__image {
+  position: relative;
+  overflow: hidden;
+}
+
+.collection-card__image img {
+  transition: transform 0.3s ease;
+}
+
+.collection-card:hover .collection-card__image img {
+  transform: scale(1.05);
+}
+
+.collection-card__info {
+  padding: var(--castle-spacing-md);
+  text-align: center;
+}
+
+.collection-card__title {
+  font-family: var(--castle-font-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--castle-primary);
+  margin-bottom: var(--castle-spacing-sm);
+}
+
+.collection-card__description {
+  font-family: var(--castle-font-secondary);
+  color: var(--castle-text-light);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Castle Buttons */
+.button {
+  font-family: var(--castle-font-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.75rem 1.5rem;
+  border: 2px solid;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.button--primary {
+  background: var(--castle-primary);
+  color: var(--castle-background);
+  border-color: var(--castle-primary);
+}
+
+.button--primary:hover {
+  background: transparent;
+  color: var(--castle-primary);
+}
+
+.button--secondary {
+  background: transparent;
+  color: var(--castle-primary);
+  border-color: var(--castle-primary);
+}
+
+.button--secondary:hover {
+  background: var(--castle-primary);
+  color: var(--castle-background);
+}
+
+.button--accent {
+  background: var(--castle-accent);
+  color: var(--castle-background);
+  border-color: var(--castle-accent);
+}
+
+.button--accent:hover {
+  background: transparent;
+  color: var(--castle-accent);
+}
+
+/* Castle Forms */
+.form__input {
+  font-family: var(--castle-font-secondary);
+  border: var(--castle-border-width) solid var(--castle-border);
+  padding: 0.75rem 1rem;
+  background: var(--castle-background);
+  color: var(--castle-text);
+  transition: border-color 0.3s ease;
+}
+
+.form__input:focus {
+  outline: none;
+  border-color: var(--castle-secondary);
+}
+
+.form__label {
+  font-family: var(--castle-font-secondary);
+  font-weight: 500;
+  color: var(--castle-text);
+  margin-bottom: var(--castle-spacing-xs);
+  display: block;
+}
+
+/* Castle Footer */
+.footer {
+  background: var(--castle-primary);
+  color: var(--castle-background);
+  padding: var(--castle-spacing-2xl) 0;
+}
+
+.footer__title {
+  font-family: var(--castle-font-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: var(--castle-spacing-md);
+}
+
+.footer__link {
+  color: var(--castle-background);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer__link:hover {
+  color: var(--castle-accent);
+}
+
+/* Castle Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--castle-font-primary);
+  font-weight: 700;
+  color: var(--castle-primary);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+/* Castle Spacing Utilities */
+.castle-padding-xs { padding: var(--castle-spacing-xs); }
+.castle-padding-sm { padding: var(--castle-spacing-sm); }
+.castle-padding-md { padding: var(--castle-spacing-md); }
+.castle-padding-lg { padding: var(--castle-spacing-lg); }
+.castle-padding-xl { padding: var(--castle-spacing-xl); }
+.castle-padding-2xl { padding: var(--castle-spacing-2xl); }
+
+.castle-margin-xs { margin: var(--castle-spacing-xs); }
+.castle-margin-sm { margin: var(--castle-spacing-sm); }
+.castle-margin-md { margin: var(--castle-spacing-md); }
+.castle-margin-lg { margin: var(--castle-spacing-lg); }
+.castle-margin-xl { margin: var(--castle-spacing-xl); }
+.castle-margin-2xl { margin: var(--castle-spacing-2xl); }
+
+/* Castle Grid System */
+.castle-grid {
+  display: grid;
+  gap: var(--castle-spacing-md);
+}
+
+.castle-grid--2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.castle-grid--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.castle-grid--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Castle Responsive Design */
+@media (max-width: 768px) {
+  .castle-grid--2,
+  .castle-grid--3,
+  .castle-grid--4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero__title {
+    font-size: 2.5rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero__title {
+    font-size: 2rem;
+  }
+  
+  .hero__subtitle {
+    font-size: 1rem;
+  }
+  
+  .castle-padding-2xl {
+    padding: var(--castle-spacing-lg);
+  }
+}
+
+/* Castle Animations */
+@keyframes castleFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.castle-fade-in {
+  animation: castleFadeIn 0.6s ease-out;
+}
+
+/* Castle Loading States */
+.castle-loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.castle-loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: castleShimmer 1.5s infinite;
+}
+
+@keyframes castleShimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}

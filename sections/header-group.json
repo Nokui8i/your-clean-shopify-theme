@@ -58,8 +58,8 @@
         }
       },
       "settings": {
-        "logo_position": "center",
-        "menu_position": "left",
+        "logo_position": "left",
+        "menu_position": "center",
         "menu_row": "top",
         "show_search": true,
         "search_position": "right",
@@ -73,19 +73,19 @@
         "localization_row": "top",
         "section_width": "page-width",
         "section_height": "standard",
-        "enable_sticky_header": "scroll-up",
-        "divider_width": 0,
+        "enable_sticky_header": "always",
+        "divider_width": 1,
         "divider_size": "page-width",
-        "border_width": 0,
-        "color_scheme_top": "",
-        "color_scheme_bottom": "",
-        "color_scheme_transparent": "scheme-6",
-        "enable_transparent_header_home": true,
-        "home_color_scheme": "inverse",
+        "border_width": 1,
+        "color_scheme_top": "scheme-1",
+        "color_scheme_bottom": "scheme-1",
+        "color_scheme_transparent": "scheme-1",
+        "enable_transparent_header_home": false,
+        "home_color_scheme": "scheme-1",
         "enable_transparent_header_product": false,
-        "product_color_scheme": "default",
+        "product_color_scheme": "scheme-1",
         "enable_transparent_header_collection": false,
-        "collection_color_scheme": "default"
+        "collection_color_scheme": "scheme-1"
       }
     }
   },

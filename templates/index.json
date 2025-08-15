@@ -42,20 +42,20 @@
         "sticky_header_behavior": "always"
       }
     },
-    "hot_now_collection": {
+    "featured_collection": {
       "type": "featured-collection",
-      "name": "HOT NOW",
+      "name": "FEATURED COLLECTION",
       "blocks": {
         "collection_title": {
           "type": "text",
           "name": "Collection Title",
           "settings": {
-            "text": "HOT NOW",
+            "text": "FEATURED COLLECTION",
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
             "type_preset": "h2",
-            "font": "var(--font-primary--family)",
+            "font": "var(--castle-font-primary)",
             "font_size": "var(--font-size--heading-lg)",
             "line_height": "tight",
             "letter_spacing": "normal",
@@ -92,9 +92,9 @@
         "enable_quick_add": false,
         "enable_quick_view": false,
         "enable_quick_shop": false,
-        "card_style": "minimal",
-        "card_hover_effect": "lift",
-        "show_collection_description": false,
+        "card_style": "classic",
+        "card_hover_effect": "zoom",
+        "show_collection_description": true,
         "collection_description_style": "body"
       }
     },
@@ -105,16 +105,16 @@
           "type": "text",
           "name": "t:names.text",
           "settings": {
-            "text": "<h1><em>Enrich </em>the<em> </em><br/>everyday</h1>",
+            "text": "<h1>ELEVATE YOUR STYLE</h1>",
             "width": "100%",
             "max_width": "narrow",
-            "alignment": "left",
+            "alignment": "center",
             "type_preset": "h1",
-            "font": "var(--font-tertiary--family)",
+            "font": "var(--castle-font-primary)",
             "font_size": "var(--font-size--heading-xl)",
             "line_height": "tight",
             "letter_spacing": "normal",
-            "case": "none",
+            "case": "uppercase",
             "wrap": "pretty",
             "color": "",
             "background": false,
@@ -139,24 +139,24 @@
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
+        "horizontal_alignment": "center",
         "vertical_alignment": "center",
         "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 96,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 48,
         "section_width": "page-width",
         "section_height": "large",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#0000009e",
-        "overlay_style": "gradient",
+        "section_height_custom": 60,
+        "color_scheme": "scheme-1",
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
         "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 80,
+        "padding-block-end": 80
       }
     },
     "product_list_x9Yaab": {
@@ -817,7 +817,7 @@
   "order": [
     "announcement_bar",
     "header",
-    "hot_now_collection",
+    "featured_collection",
     "hero_irjTFL",
     "product_list_x9Yaab",
     "featured_product_yEF9dK",
