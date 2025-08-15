@@ -39,7 +39,7 @@
             "image_border_radius": 0,
             "product_title_case": "uppercase",
             "collection_title_case": "default",
-            "color_scheme": "",
+            "color_scheme": "scheme-1",
             "menu_font_style": "inverse",
             "type_font_primary_link": "subheading",
             "type_font_primary_size": "var(--font-size--body-md)",
@@ -58,7 +58,11 @@
         }
       },
       "settings": {
+<<<<<<< HEAD
         "logo_position": "left",
+=======
+        "logo_position": "center",
+>>>>>>> 1204742f0a078ca8e89c20a55927d52a5084a16b
         "menu_position": "center",
         "menu_row": "top",
         "show_search": true,
@@ -76,6 +80,7 @@
         "enable_sticky_header": "always",
         "divider_width": 1,
         "divider_size": "page-width",
+<<<<<<< HEAD
         "border_width": 1,
         "color_scheme_top": "scheme-1",
         "color_scheme_bottom": "scheme-1",
@@ -86,6 +91,18 @@
         "product_color_scheme": "scheme-1",
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "scheme-1"
+=======
+        "border_width": 0,
+        "color_scheme_top": "",
+        "color_scheme_bottom": "",
+        "color_scheme_transparent": "scheme-6",
+        "enable_transparent_header_home": true,
+        "home_color_scheme": "inverse",
+        "enable_transparent_header_product": true,
+        "product_color_scheme": "default",
+        "enable_transparent_header_collection": true,
+        "collection_color_scheme": "default"
+>>>>>>> 1204742f0a078ca8e89c20a55927d52a5084a16b
       }
     }
   },
